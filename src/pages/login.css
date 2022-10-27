@@ -1,0 +1,18 @@
+.form-user{
+    width: 350px;
+    margin: 50px auto;
+    border: 1px solid;
+    padding: 20px;
+    text-align: left;
+    border-radius: 8px;
+}
+
+input,select{
+    border: 1px solid rgb(100, 93, 93) !important;
+}
+
+.error-message{
+    font-size: 12px;
+    color: red;
+    margin-top:8px;
+}

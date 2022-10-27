@@ -1,0 +1,34 @@
+
+.product-img{
+    width:100%;
+    position:relative
+}
+
+.product-img img{
+    width: 100%;
+    height:380px
+}
+
+.product-addCart{
+    position:absolute;
+    top: 0;
+    left:20%;
+    transition:0.4s ease-in-out;
+    visibility: hidden;
+}
+
+.product-img:hover .product-addCart{
+    top:45%;
+    visibility:visible;
+}
+
+.product-addCart p{
+    text-align: center;
+    font-size: 18px;
+    color:white;
+    border: 1px solid tomato;
+    background-color: tomato;
+    font-weight: 600;
+    padding:10px;
+    cursor: pointer;
+}

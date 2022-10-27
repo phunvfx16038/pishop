@@ -1,0 +1,37 @@
+.btn-group{
+    display: flex;
+    justify-content: center;
+    margin-top:10px;  
+}
+
+.item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgb(90, 87, 87);
+    margin:10px 0px;
+    padding:10px;
+    position: relative;
+}
+
+.close{
+    position: absolute;
+    top: -8px;
+    right: 0;
+    cursor: pointer;
+    border-radius: 50%;
+    border: 1px solid red;
+    padding:0px 7px 2px 7px;
+    background-color: red;
+    color: white;
+}
+
+.img-product{
+    width:100px;
+    height: 100px;
+}
+.qtn-product{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
