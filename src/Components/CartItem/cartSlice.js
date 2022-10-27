@@ -34,7 +34,6 @@ export const updateCart = createAsyncThunk("cart/updateCart", async (cart) => {
   };
   try {
     const res = await axios.post(`${baseUrl}cart/update`, data, { headers });
-    console.log(res.data);
     return res.data;
   } catch (err) {
     throw err.response.data.error;

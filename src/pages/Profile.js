@@ -5,14 +5,14 @@ import ProfileCard from "../Components/Card/ProfileCard";
 import { Link } from "react-router-dom";
 
 const Profile = () => {
-  const currentUser = useSelector((state) => state.user.login.user);
+  const currentUser = useSelector((state) => state.user.login);
 
   return (
     <>
       <Row style={{ margin: "0px" }}>
         <Col xs={12}>
-          {currentUser.accessToken !== undefined ? (
-            <ProfileCard userDetail={currentUser} />
+          {currentUser.isLogged ? (
+            <ProfileCard userDetail={currentUser.user} />
           ) : (
             <div style={{ margin: "30px 0" }}>
               Vui lòng đăng nhập <Link to="/login">tại đây</Link> để xem hồ sơ.

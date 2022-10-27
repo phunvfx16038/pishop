@@ -3,7 +3,6 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Col from "react-bootstrap/Col";
 import { useNavigate } from "react-router-dom";
 import Spinner from "react-bootstrap/Spinner";
 import storage from "../firebase/firebase";
@@ -264,20 +263,6 @@ const Register = () => {
             onChange={handleChange}
           />
           <p className="error-message">{errors.phone}</p>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Admin</Form.Label>
-          <Col sm={12}>
-            <Form.Select
-              name="isAdmin"
-              type="select"
-              value={formData.isAdmin}
-              onChange={handleChange}
-            >
-              <option value="false">False</option>
-              <option value="true">True </option>
-            </Form.Select>
-          </Col>
         </Form.Group>
         {registerInfor.isLoading ? (
           <div

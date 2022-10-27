@@ -11,7 +11,7 @@ import {
 const CartItem = ({ product, quantity, type, listCart, token }) => {
   const dispatch = useDispatch();
   const productPrice = product.price.replace(",", "");
-  const subTotal = parseInt(productPrice) * (quantity <= 1 ? 1 : quantity);
+  const subTotal = parseFloat(productPrice) * (quantity <= 1 ? 1 : quantity);
   const subTotalFormatted = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",

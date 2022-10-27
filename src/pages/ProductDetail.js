@@ -82,12 +82,12 @@ const ProductDetail = () => {
                 }}
                 aria-label="My Favorite Images"
               >
-                {productDetail.imageUrl.map((image, index) => (
+                {productDetail.imageUrl.map((imageItem, index) => (
                   <SplideSlide
-                    onClick={() => handleChangeImage(image)}
+                    onClick={() => handleChangeImage(imageItem)}
                     key={index}
                   >
-                    <img src={image} alt="Image 1" />
+                    <img src={imageItem} alt="Url" />
                   </SplideSlide>
                 ))}
               </Splide>

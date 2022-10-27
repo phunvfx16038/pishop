@@ -59,6 +59,7 @@ const userSlice = createSlice({
       isLoading: "",
       isError: "",
       user: {},
+      isLogged: false,
     },
     register: {
       isLoading: "",
@@ -74,6 +75,7 @@ const userSlice = createSlice({
   reducers: {
     logoutUser: (state, action) => {
       state.login.user = action.payload;
+      state.login.isLogged = false;
     },
     updateMainAccount: (state, action) => {
       state.login.user = action.payload;

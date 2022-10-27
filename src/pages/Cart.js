@@ -1,8 +1,7 @@
 import { Container, Row, Button } from "reactstrap";
 import CartItem from "../Components/CartItem/CartItem";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { updateCart } from "../Components/CartItem/cartSlice";
 import { useState } from "react";
 import AddCartModal from "../Components/Modals/AddCartModal";
 import PaypalCheckoutButton from "../Components/PaypalCheckoutButton ";
@@ -11,35 +10,37 @@ const Cart = () => {
   const currentUser = useSelector((state) => state.user.login.user);
   const token = `Bear ${currentUser.accessToken}`;
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [callModal, setCallModal] = useState(false);
   const [modalType, setModalType] = useState(null);
   const cartId = listCart.fullCart._id;
   const statusCart = "completed";
   const totalPrice = listCart.cart.reduce((result, current) => {
     const productPrice = current.price.replace(",", "");
-    return (result = result + parseInt(productPrice) * current.quantity);
+    return (result = result + parseFloat(productPrice) * current.quantity);
   }, 0);
+
   const totalPriceFormatted = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   }).format(totalPrice);
-  //status of cart
-  const status = "pending";
+
   const backToShopPing = () => {
     navigate("/");
   };
+
+  console.log(totalPriceFormatted);
 
   const handleChangeStateModal = (value, type) => {
     setModalType(type);
     setCallModal(value);
   };
 
-  const handleCheckOut = () => {
-    const cartId = listCart.fullCart._id;
-    dispatch(updateCart({ cartId, token, cartItems: listCart.cart, status }));
-    navigate("/order/chekoutAddress");
-  };
+  // const handleCheckOut = () => {
+  //   const cartId = listCart.fullCart._id;
+  //   dispatch(updateCart({ cartId, token, cartItems: listCart.cart, status }));
+  //   navigate("/order/chekoutAddress");
+  // };
 
   return (
     <Container>

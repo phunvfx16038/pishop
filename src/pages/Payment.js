@@ -19,16 +19,6 @@ const Payment = () => {
     return (result = result + parseInt(productPrice) * current.quantity);
   }, 0);
 
-  const items = listCart.cart.map((item) => {
-    const data = {
-      name: item.title,
-      quantity: item.quantity,
-      price: parseInt(item.price),
-      currency: "USD",
-    };
-    return data;
-  });
-
   const handleChangeStateModal = (value, type) => {
     setModalType(type);
     setCallModal(value);

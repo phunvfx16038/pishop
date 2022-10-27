@@ -12,7 +12,7 @@ const Login = () => {
   const loginInfor = useSelector((state) => state.user.login);
 
   useEffect(() => {
-    if (JSON.stringify(loginInfor.user) !== "{}" && loginInfor.user.isAdmin) {
+    if (JSON.stringify(loginInfor.user) !== "{}") {
       navigate("/");
     }
     // else if (JSON.stringify(loginInfor.user) === "{}") {

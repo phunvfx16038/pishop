@@ -13,7 +13,7 @@ const Product = ({ product }) => {
   const [callModal, setCallModal] = useState(false);
   const [callLoginModal, setCallLoginModal] = useState(false);
   const currentUser = useSelector((state) => state.user.login.user);
-  const convertStingPrice = parseInt(product.price.replace(",", ""));
+  const convertStingPrice = parseFloat(product.price.replace(",", ""));
   const token = `Bear ${currentUser.accessToken}`;
   const listCart = useSelector((state) => state.cart);
   //status of cart
