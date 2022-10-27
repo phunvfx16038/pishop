@@ -50,6 +50,8 @@ app.use("/products", productRouter);
 app.use("/orders", orderRouter);
 app.use("/cart", cartRouter);
 
+const PORT = process.env.PORT || 8080;
+
 mongoose
   .connect(MONGO_URI, {
     useNewUrlParser: true,
@@ -71,6 +73,6 @@ mongoose
         await Order.insertMany(orderData.orders);
       }
     });
-    app.listen(8080);
+    app.listen(PORT);
   })
   .catch((err) => console.log(err));
