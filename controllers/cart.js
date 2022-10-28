@@ -2,7 +2,7 @@ const Cart = require("../models/cart");
 
 exports.getCarts = (req, res) => {
   const userId = req.params.id;
-  Cart.find({ "user.userId": userId, status: "pending" })
+  Cart.find({ "user.userId": userId })
     .then((cart) => {
       res.status(200).json(cart);
     })
