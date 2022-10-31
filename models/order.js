@@ -14,15 +14,7 @@ const Orders = new Schema(
         required: true,
       },
     },
-    orderItems: [],
-    totalPrice: {
-      type: Number,
-      required: true,
-      default: true,
-    },
-    address:{
-      type:String,
-    },
+    purchase_units: {},
     status: {
       type: String,
       require: true,
