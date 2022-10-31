@@ -1,17 +1,23 @@
-.footer{
-    background-color: rgba(25,135,84,255);
-    padding:30px;
-    margin-top: 50px;
+.footer {
+  background-color: rgba(25, 135, 84, 255);
+  padding: 30px;
+  margin-top: 200px;
+  position: relative;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height:200px;
+  
 }
 
-.mr-20{
-    margin-right: 20px;
+.mr-20 {
+  margin-right: 20px;
 }
 
-.color-red{
-    color:red
+.color-red {
+  color: red;
 }
 
-.color-blue{
-    color:blue
+.color-blue {
+  color: blue;
 }

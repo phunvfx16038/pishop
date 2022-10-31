@@ -29,13 +29,12 @@ export const getProductOnCategories = createAsyncThunk(
 export const createOrder = createAsyncThunk(
   "product/createOrder",
   async (data) => {
+    const { token, ...orderData } = data;
     try {
       const headers = {
-        token: data.token,
+        token,
       };
-      const createData = data.newOrder;
-
-      const res = await axios.post(`${baseUrl}orders/create`, createData, {
+      const res = await axios.post(`${baseUrl}orders/create`, orderData, {
         headers,
       });
       console.log(res.data);
@@ -53,13 +52,9 @@ export const getOrderUser = createAsyncThunk(
       const headers = {
         token: data.token,
       };
-      const res = await axios.get(
-        `${baseUrl}orders/${data.id}/${data.orderId}`,
-        {
-          headers,
-        }
-      );
-      console.log(res.data);
+      const res = await axios.get(`${baseUrl}orders/orderUser/${data.userId}`, {
+        headers,
+      });
       return res.data;
     } catch (err) {
       throw err.response.data.error;
@@ -99,7 +94,7 @@ const productSlice = createSlice({
       active: 1,
       currentPage: 1,
     },
-    orders: {},
+    orders: [],
   },
   reducers: {
     searchProduct: (state, action) => {
@@ -134,6 +129,9 @@ const productSlice = createSlice({
         state.orders = action.payload;
       })
       .addCase(getOrderUser.fulfilled, (state, action) => {
+        if (JSON.stringify(action.payload) === "{}") {
+          state.orders = [];
+        }
         state.orders = action.payload;
       });
   },

@@ -11,7 +11,10 @@ import {
 const CartItem = ({ product, quantity, type, listCart, token }) => {
   const dispatch = useDispatch();
   const productPrice = product.price.replace(",", "");
-  const subTotal = parseFloat(productPrice) * (quantity <= 1 ? 1 : quantity);
+  const subTotal =
+    Math.round(
+      parseFloat(productPrice) * (quantity <= 1 ? 1 : quantity) * 100
+    ) / 100;
   const subTotalFormatted = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
@@ -22,8 +25,8 @@ const CartItem = ({ product, quantity, type, listCart, token }) => {
 
   const handlePlus = (id) => {
     const data = {
-      id: id,
-      quantity: quantity,
+      id,
+      quantity,
     };
     dispatch(increaseQuantity(data));
   };
@@ -33,6 +36,7 @@ const CartItem = ({ product, quantity, type, listCart, token }) => {
       id: id,
       quantity: quantity,
     };
+
     dispatch(decreaseQuantity(data));
   };
 

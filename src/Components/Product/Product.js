@@ -66,7 +66,11 @@ const Product = ({ product }) => {
           <p style={{ fontWeight: 700 }}>{productPrice}</p>
         </div>
       </Link>
-      <AddCartModal callModal={callModal} close={() => setCallModal(false)} />
+      <AddCartModal
+        callModal={callModal}
+        close={() => setCallModal(false)}
+        order={null}
+      />
       <CheckLoginModal
         callModal={callLoginModal}
         close={() => setCallLoginModal(false)}

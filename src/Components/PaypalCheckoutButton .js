@@ -1,33 +1,23 @@
 import { useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
-import { useDispatch } from "react-redux";
-import { resetCart, updateCart } from "./CartItem/cartSlice";
-import { useNavigate } from "react-router-dom";
 
 const PaypalCheckoutButton = (props) => {
-  const {
-    total,
-    cartId,
-    token,
-    statusCart,
-    cartItems,
-    handleChangeStateModal,
-  } = props;
+  const { total, cartItems, handleChangeStateModal } = props;
 
   const [paidFor, setPaidFor] = useState(false);
   const [error, setError] = useState(null);
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const handleApprove = (orderId) => {
+  const [orderData, setOrderData] = useState({});
+  const handleApprove = (order) => {
     // Call backend function to fulfill order
 
     // if response is success
     setPaidFor(true);
+    setOrderData(order);
     // Refresh user's account or subscription status
-
     // if response is error
-    // alert("Your payment was processed successfully. However, we are unable to fulfill your purchase. Please contact us at support@designcode.io for assistance.");
+    // alert(
+    //   "Your payment was processed successfully. However, we are unable to fulfill your purchase. Please contact us at support@designcode.io for assistance."
+    // );
   };
 
   const handleCancle = () => {
@@ -36,23 +26,14 @@ const PaypalCheckoutButton = (props) => {
 
   if (paidFor) {
     // Display success message, modal or redirect user to success page
-    handleChangeStateModal(true, "payment");
+    handleChangeStateModal(true, "payment", orderData);
   }
 
   if (error) {
     // Display error message, modal or redirect user to error page
     alert(error);
   }
-  const itemsCart = cartItems.map((item) => {
-    const data = {
-      name: item.title,
-      quantity: JSON.stringify(item.quantity),
-      unit_amount: {
-        value: parseInt(item.price) * item.quantity,
-      },
-    };
-    return data;
-  });
+
   return (
     <PayPalButtons
       style={{
@@ -68,9 +49,27 @@ const PaypalCheckoutButton = (props) => {
             {
               description: "Pay for clothes",
               amount: {
+                currency_code: "USD",
                 value: total,
+                breakdown: {
+                  item_total: {
+                    currency_code: "USD",
+                    value: total,
+                  },
+                },
               },
-              // items: itemsCart,
+              items: cartItems.map((item) => {
+                return {
+                  name: item.title,
+                  quantity: item.quantity,
+                  unit_amount: {
+                    value:
+                      Math.round(parseFloat(item.price) * item.quantity * 100) /
+                      100,
+                    currency_code: "USD",
+                  },
+                };
+              }),
             },
           ],
         });
@@ -78,8 +77,7 @@ const PaypalCheckoutButton = (props) => {
       onApprove={async (data, actions) => {
         const order = await actions.order.capture();
         console.log("order", order);
-        dispatch(updateCart({ cartId, token, status: statusCart, cartItems }));
-        handleApprove(data.orderID);
+        handleApprove(order);
       }}
       onError={(err) => {
         setError(err);

@@ -149,7 +149,11 @@ const ProductDetail = () => {
             </Button>
           </div>
         </Col>
-        <AddCartModal callModal={callModal} close={() => setCallModal(false)} />
+        <AddCartModal
+          callModal={callModal}
+          close={() => setCallModal(false)}
+          order={null}
+        />
         <CheckLoginModal
           callModal={callLoginModal}
           close={() => setCallLoginModal(false)}

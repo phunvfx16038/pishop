@@ -23,6 +23,7 @@ import Footer from "./Components/Footer";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import CheckOutAddress from "./pages/CheckoutAddress";
 import Payment from "./pages/Payment";
+import Orders from "./pages/Orders";
 
 function App() {
   const dispatch = useDispatch();
@@ -71,8 +72,9 @@ function App() {
           <Route path="/products/:id" element={<ProductDetail />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/orderlist" element={<Orders />} />
           <Route path="/order/chekoutAddress" element={<CheckOutAddress />} />
-          <Route path="/order/payment" element={<Payment />} />
+          <Route path="/order/:id" element={<Payment />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

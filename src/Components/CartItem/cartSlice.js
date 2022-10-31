@@ -34,6 +34,7 @@ export const updateCart = createAsyncThunk("cart/updateCart", async (cart) => {
   };
   try {
     const res = await axios.post(`${baseUrl}cart/update`, data, { headers });
+    console.log(res.data);
     return res.data;
   } catch (err) {
     throw err.response.data.error;
@@ -91,9 +92,18 @@ const cartSlice = createSlice({
         state.fullCart = action.payload;
       })
       .addCase(getCart.fulfilled, (state, action) => {
-        if (JSON.stringify(action.payload) !== "[]") {
-          state.cart = action.payload[0].cartItems;
-          state.fullCart = action.payload[0];
+        if (action.payload.length !== 0) {
+          const cartDisplay = action.payload.filter(
+            (cart) => cart.status === "pending"
+          );
+          if (cartDisplay.length !== 0) {
+            state.cart = cartDisplay[0].cartItems;
+            state.fullCart = cartDisplay[0];
+          } else {
+            state.cart = [];
+          }
+        } else {
+          state.cart = [];
         }
       })
       .addCase(updateCart.fulfilled, (state, action) => {

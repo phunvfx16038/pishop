@@ -116,11 +116,8 @@ const Header = () => {
                 onClick={handleUpdateCart}
                 style={{ cursor: "pointer" }}
               />
-              {listCart.cart !== undefined ? (
-                <span>{listCart.cart.length}</span>
-              ) : (
-                <span>0</span>
-              )}
+
+              <span>{listCart.cart.length}</span>
             </NavItem>
           </NavLink>
           {JSON.stringify(currentUser) !== "{}" ? (
@@ -136,11 +133,11 @@ const Header = () => {
                     Hồ sơ
                   </NLink>
                 </DropdownItem>
-                {/* <DropdownItem>
+                <DropdownItem>
                   <NLink to="/orderList" style={{ color: "black" }}>
                     Đơn hàng
                   </NLink>
-                </DropdownItem> */}
+                </DropdownItem>
                 <DropdownItem onClick={handleLogout}>Đăng xuất</DropdownItem>
               </DropdownMenu>
             </UncontrolledDropdown>

@@ -1,20 +1,23 @@
 import { Container, Row, Button } from "reactstrap";
 import CartItem from "../Components/CartItem/CartItem";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import AddCartModal from "../Components/Modals/AddCartModal";
 import PaypalCheckoutButton from "../Components/PaypalCheckoutButton ";
+import { updateCart } from "../Components/CartItem/cartSlice";
 const Cart = () => {
   const listCart = useSelector((state) => state.cart);
   const currentUser = useSelector((state) => state.user.login.user);
   const token = `Bear ${currentUser.accessToken}`;
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [callModal, setCallModal] = useState(false);
   const [modalType, setModalType] = useState(null);
-  const cartId = listCart.fullCart._id;
-  const statusCart = "completed";
+  const [order, setOrder] = useState({});
+  const [show, setShow] = useState(true);
+  //status of cart
+  const status = "pending";
   const totalPrice = listCart.cart.reduce((result, current) => {
     const productPrice = current.price.replace(",", "");
     return (result = result + parseFloat(productPrice) * current.quantity);
@@ -23,24 +26,23 @@ const Cart = () => {
   const totalPriceFormatted = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-  }).format(totalPrice);
+  }).format(Math.round(totalPrice * 100) / 100);
 
   const backToShopPing = () => {
     navigate("/");
   };
 
-  console.log(totalPriceFormatted);
-
-  const handleChangeStateModal = (value, type) => {
+  const handleChangeStateModal = (value, type, orderData) => {
     setModalType(type);
     setCallModal(value);
+    setOrder(orderData);
   };
 
-  // const handleCheckOut = () => {
-  //   const cartId = listCart.fullCart._id;
-  //   dispatch(updateCart({ cartId, token, cartItems: listCart.cart, status }));
-  //   navigate("/order/chekoutAddress");
-  // };
+  const handleCheckout = () => {
+    const cartId = listCart.fullCart._id;
+    setShow(!show);
+    dispatch(updateCart({ cartId, token, cartItems: listCart.cart, status }));
+  };
 
   return (
     <Container>
@@ -82,15 +84,20 @@ const Cart = () => {
                 Tiếp tục mua sắm
               </Button>
             </div>
-            <PaypalCheckoutButton
-              total={totalPrice}
-              cartId={cartId}
-              token={token}
-              statusCart={statusCart}
-              cartItems={listCart.cart}
-              currentUser={currentUser}
-              handleChangeStateModal={handleChangeStateModal}
-            />
+            {show ? (
+              <div>
+                <Button color="success" onClick={handleCheckout}>
+                  Thanh toán
+                </Button>
+              </div>
+            ) : (
+              <PaypalCheckoutButton
+                total={Math.round(totalPrice * 100) / 100}
+                cartItems={listCart.cart}
+                currentUser={currentUser}
+                handleChangeStateModal={handleChangeStateModal}
+              />
+            )}
           </div>
         </Row>
       )}
@@ -98,6 +105,7 @@ const Cart = () => {
         callModal={callModal}
         close={() => setCallModal(false)}
         type={modalType}
+        order={order}
       />
     </Container>
   );

@@ -1,28 +1,12 @@
 import { Container, Row } from "reactstrap";
-import { useState } from "react";
-import CartItem from "../Components/CartItem/CartItem";
 import { useSelector } from "react-redux";
-import PaypalCheckoutButton from "../Components/PaypalCheckoutButton ";
-import { Link } from "react-router-dom";
-import AddCartModal from "../Components/Modals/AddCartModal";
+import { Link, useLocation } from "react-router-dom";
 
 const Payment = () => {
-  const currentUser = useSelector((state) => state.user.login.user);
-  const token = `Bear ${currentUser.accessToken}`;
-  const listCart = useSelector((state) => state.cart);
-  const cartId = listCart.fullCart._id;
-  const statusCart = "completed";
-  const [callModal, setCallModal] = useState(false);
-  const [modalType, setModalType] = useState(null);
-  const totalPrice = listCart.cart.reduce((result, current) => {
-    const productPrice = current.price.replace(",", "");
-    return (result = result + parseInt(productPrice) * current.quantity);
-  }, 0);
-
-  const handleChangeStateModal = (value, type) => {
-    setModalType(type);
-    setCallModal(value);
-  };
+  const currentUser = useSelector((state) => state.user.login);
+  const location = useLocation();
+  const orderDetail = location.state;
+  console.log(orderDetail.purchase_units[0]);
 
   return (
     <Container>
@@ -32,7 +16,7 @@ const Payment = () => {
         Thông tin đơn hàng
       </div>
       <Row>
-        {currentUser.accessToken !== undefined ? (
+        {currentUser.isLogged ? (
           <>
             <div
               style={{
@@ -41,17 +25,40 @@ const Payment = () => {
                 textAlign: "left",
               }}
             >
-              <div>Khách hàng: {currentUser.userName}</div>
-              <div>Địa chỉ: {currentUser.address}</div>
-              <div>Số điện thoại: {currentUser.phone}</div>
+              <div>Khách hàng: {orderDetail.user.name}</div>
+              <div>
+                Địa chỉ:{" "}
+                {orderDetail.purchase_units[0].shipping.address.address_line_1}
+                {orderDetail.purchase_units[0].shipping.address.admin_area_2}
+              </div>
             </div>
             <h4>Danh sục sản phẩm</h4>
-            {listCart.cart.map((product) => (
-              <CartItem
-                product={product}
-                key={product._id}
-                quantity={product.quantity}
-              />
+            {orderDetail.purchase_units[0].items.map((product) => (
+              <div className="item">
+                <p className="name-product">{product.name}</p>
+                <div className="qtn-product">
+                  <label>Số lượng</label>
+                  <div className="btn-group">{product.quantity}</div>
+                </div>
+                <div className="qtn-product">
+                  <label>Giá sản phẩm</label>
+                  <div className="btn-group">
+                    <p>{product.unit_amount.value}</p>
+                  </div>
+                </div>
+                <div className="qtn-product">
+                  <label>Tổng giá</label>
+                  <div className="btn-group">
+                    <p>
+                      {(Math.round(
+                        parseFloat(product.unit_amount.value) * 100
+                      ) /
+                        100) *
+                        product.quantity}
+                    </p>
+                  </div>
+                </div>
+              </div>
             ))}
             <div
               style={{
@@ -64,19 +71,8 @@ const Payment = () => {
                 Tổng giá tiền
               </h5>
               <p style={{ marginRight: "15px", fontSize: "18px" }}>
-                ${totalPrice}
+                ${orderDetail.purchase_units[0].amount.value}
               </p>
-            </div>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <PaypalCheckoutButton
-                total={totalPrice}
-                cartId={cartId}
-                token={token}
-                statusCart={statusCart}
-                cartItems={listCart.cart}
-                currentUser={currentUser}
-                handleChangeStateModal={handleChangeStateModal}
-              />
             </div>
           </>
         ) : (
@@ -85,11 +81,6 @@ const Payment = () => {
           </div>
         )}
       </Row>
-      <AddCartModal
-        callModal={callModal}
-        close={() => setCallModal(false)}
-        type={modalType}
-      />
     </Container>
   );
 };
