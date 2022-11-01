@@ -1,5 +1,6 @@
 import { Button, Col } from "reactstrap";
 import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import "./cart.css";
 import {
   decreaseQuantity,
@@ -11,6 +12,9 @@ import {
 const CartItem = ({ product, quantity, type, listCart, token }) => {
   const dispatch = useDispatch();
   const productPrice = product.price.replace(",", "");
+  const [screen, setScreen] = useState(window.innerWidth);
+  //status of cart
+  const status = "pending";
   const subTotal =
     Math.round(
       parseFloat(productPrice) * (quantity <= 1 ? 1 : quantity) * 100
@@ -20,8 +24,9 @@ const CartItem = ({ product, quantity, type, listCart, token }) => {
     currency: "USD",
   }).format(subTotal);
 
-  //status of cart
-  const status = "pending";
+  useEffect(() => {
+    setScreen(window.innerWidth);
+  }, []);
 
   const handlePlus = (id) => {
     const data = {
@@ -57,69 +62,64 @@ const CartItem = ({ product, quantity, type, listCart, token }) => {
   };
   return (
     <Col xs="12">
-      <div className="item">
-        {type === "payment" ? (
-          ""
-        ) : (
-          <div className="close" onClick={() => handleDeleteItem(product._id)}>
-            <span>x</span>
-          </div>
-        )}
-
+      <div
+        className="item"
+        style={{ flexDirection: screen > 768 ? "none" : "column" }}
+      >
+        <div className="close" onClick={() => handleDeleteItem(product._id)}>
+          <span>x</span>
+        </div>
         <div className="img-product">
           <img src={product.thumbnail} alt={product.brand} />
         </div>
-        <p className="name-product">{product.title}</p>
-
-        {type === "payment" ? (
-          ""
-        ) : (
-          <>
-            <div className="qtn-product">
-              <label>Kích cỡ</label>
-              <div className="btn-group">
-                <select style={{ padding: "5px 10px" }}>
-                  {product.size.map((item, index) => (
-                    <option key={index}>{item}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="qtn-product">
-              <label>Số lượng</label>
-              <div className="btn-group">
-                {quantity === 1 ? (
-                  <Button color="success" disabled>
-                    -
-                  </Button>
-                ) : (
-                  <Button
-                    color="success"
-                    onClick={() => handleSubtract(product._id)}
-                  >
-                    -
-                  </Button>
-                )}
-                <span>{quantity < 1 ? 1 : quantity}</span>
-                <Button color="success" onClick={() => handlePlus(product._id)}>
-                  +
-                </Button>
-              </div>
-            </div>
-          </>
-        )}
+        <p>{product.title}</p>
+        <div className="qtn-product">
+          <label>Kích cỡ</label>
+          <div className="btn-group">
+            <select style={{ padding: "5px 10px" }}>
+              {product.size.map((item, index) => (
+                <option key={index}>{item}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <div className="qtn-product">
+          <label>Số lượng</label>
+          <div className="btn-group">
+            {quantity === 1 ? (
+              <Button color="success" disabled>
+                -
+              </Button>
+            ) : (
+              <Button
+                color="success"
+                onClick={() => handleSubtract(product._id)}
+              >
+                -
+              </Button>
+            )}
+            <span>{quantity < 1 ? 1 : quantity}</span>
+            <Button color="success" onClick={() => handlePlus(product._id)}>
+              +
+            </Button>
+          </div>
+        </div>
         <div className="qtn-product">
           <label>Giá sản phẩm</label>
           <div className="btn-group">
-            <p>{product.price}</p>
+            <p>${product.price}</p>
           </div>
         </div>
-        <div className="qtn-product">
-          <label>Tổng giá</label>
-          <div className="btn-group">
-            <p>{subTotalFormatted}</p>
+        {screen > 768 ? (
+          <div className="qtn-product">
+            <label>Tổng giá</label>
+            <div className="btn-group">
+              <p>{subTotalFormatted}</p>
+            </div>
           </div>
-        </div>
+        ) : (
+          ""
+        )}
       </div>
     </Col>
   );

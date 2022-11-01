@@ -4,9 +4,8 @@ import Col from "react-bootstrap/Col";
 import { addCart, createCart } from "../CartItem/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import AddCartModal from "../Modals/AddCartModal";
-import { useState } from "react";
 import CheckLoginModal from "../Modals/CheckLogInModal";
-
+import { useEffect, useState } from "react";
 const Product = ({ product }) => {
   const quantity = 1;
   const dispatch = useDispatch();
@@ -16,12 +15,17 @@ const Product = ({ product }) => {
   const convertStingPrice = parseFloat(product.price.replace(",", ""));
   const token = `Bear ${currentUser.accessToken}`;
   const listCart = useSelector((state) => state.cart);
+  const [screen, setScreen] = useState(window.innerWidth);
   //status of cart
   const status = "pending";
   const productPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   }).format(convertStingPrice);
+
+  useEffect(() => {
+    setScreen(window.innerWidth);
+  }, []);
 
   const handleAddToCart = (product) => {
     if (JSON.stringify(currentUser) !== "{}") {
@@ -48,7 +52,7 @@ const Product = ({ product }) => {
   };
 
   return (
-    <Col sm={3}>
+    <Col sm={screen > 768 ? 3 : 4}>
       <div className="product-img">
         <Link to={`/products/${product._id}`} state={{ product }}>
           <img alt="product" src={product.thumbnail} />

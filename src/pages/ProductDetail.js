@@ -1,7 +1,7 @@
 import { Button, Col, Container, Row } from "reactstrap";
 import "./productDetail.css";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addCart, createCart } from "../Components/CartItem/cartSlice";
 import AddCartModal from "../Components/Modals/AddCartModal";
@@ -17,9 +17,15 @@ const ProductDetail = () => {
   const currentUser = useSelector((state) => state.user.login.user);
   const token = `Bear ${currentUser.accessToken}`;
   const cart = useSelector((state) => state.cart.cart);
+  const [screen, setScreen] = useState(window.innerWidth);
   let [quantity, setQuantity] = useState(1);
   const status = "pending";
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setScreen(window.innerWidth);
+  }, []);
+
   const handleChangeImage = (image) => {
     setShowImage(image);
   };
@@ -63,7 +69,7 @@ const ProductDetail = () => {
   return (
     <Container className="px-3">
       <Row className="g-4 mt-2">
-        <Col xs="6">
+        <Col xs={screen > 768 ? "6" : "12"}>
           <Row style={{ display: "flex" }} className="g-2">
             <Col xs="9" className="big-image">
               <img alt={productDetail.title} src={showImage} />
@@ -94,7 +100,7 @@ const ProductDetail = () => {
             </Col>
           </Row>
         </Col>
-        <Col xs="6" style={{ textAlign: "left" }}>
+        <Col xs={screen > 768 ? "6" : "12"} style={{ textAlign: "left" }}>
           <h3 style={{ textTransform: "capitalize" }}>{productDetail.title}</h3>
           <p style={{ fontWeight: 600, fontSize: "22px" }}>
             {productDetail.price}đ

@@ -18,10 +18,12 @@ import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { NavLink as NLink, useNavigate } from "react-router-dom";
 import "./header.css";
-import { IoMdCart, IoIosSearch } from "react-icons/io";
+import { IoMdCart, IoIosSearch, IoMdHome } from "react-icons/io";
+import { IoPersonCircle } from "react-icons/io5";
 import { logoutUser } from "../User/userSlice";
 import { getCart, resetCart, updateCart } from "../CartItem/cartSlice";
 import { searchProduct } from "../ProductLists/productSlice";
+
 // Main Code
 const Header = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -33,6 +35,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const token = `Bear ${currentUser.accessToken}`;
   const [search, setSearch] = useState(null);
+  const [screen, setScreen] = useState(window.innerWidth);
   const user = {
     userId,
     name: currentUser.userName,
@@ -43,6 +46,7 @@ const Header = () => {
     if (JSON.stringify(currentUser) !== "{}") {
       dispatch(getCart({ token, userId }));
     }
+    setScreen(window.innerWidth);
   }, [dispatch, token, userId, currentUser]);
 
   const handleSearch = () => {
@@ -70,85 +74,192 @@ const Header = () => {
     navigate("/");
   };
   return (
-    <Navbar color="success" light expand={"xl"} dark={true} sticky="top">
-      <NavbarBrand style={{ margin: "0px 40px" }} to="/" tag={NLink}>
-        Trang chủ
-      </NavbarBrand>
-      <NavbarToggler onClick={toggleNavbar} />
-      <Collapse navbar isOpen={!collapsed}>
-        <Nav className="me-auto" navbar>
-          <NavItem>
-            <NavLink to="/products/men" tag={NLink}>
-              Nam
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={NLink} to="/products/women">
-              Nữ
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={NLink} to="/products/boy">
-              Bé trai
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink tag={NLink} to="/products/girl">
-              Bé gái
-            </NavLink>
-          </NavItem>
-        </Nav>
-        <Nav>
-          <div className="search">
-            <Input
-              onChange={(e) => setSearch(e.target.value)}
-              onKeyDown={(e) => handleKeyDown(e)}
-            />
-            <span onClick={handleSearch}>
-              <IoIosSearch />
-            </span>
-          </div>
-        </Nav>
-        <Nav>
-          <NavLink>
-            <NavItem className="cart">
-              <IoMdCart
-                onClick={handleUpdateCart}
-                style={{ cursor: "pointer" }}
-              />
+    <>
+      {screen > 768 ? (
+        <Navbar color="success" light expand={"lg"} dark={true} sticky="top">
+          <NavbarBrand
+            style={{ margin: "0px 20px 12px 20px", fontSize: "24px" }}
+            to="/"
+            tag={NLink}
+          >
+            <IoMdHome />
+          </NavbarBrand>
+          <NavbarToggler onClick={toggleNavbar} />
+          <Collapse navbar isOpen={!collapsed}>
+            <Nav className="me-auto" navbar>
+              <NavItem>
+                <NavLink to="/products/men" tag={NLink}>
+                  Nam
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={NLink} to="/products/women">
+                  Nữ
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={NLink} to="/products/boy">
+                  Bé trai
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink tag={NLink} to="/products/girl">
+                  Bé gái
+                </NavLink>
+              </NavItem>
+            </Nav>
+            <Nav>
+              <div className="search">
+                <Input
+                  onChange={(e) => setSearch(e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(e)}
+                />
+                <span onClick={handleSearch}>
+                  <IoIosSearch />
+                </span>
+              </div>
+            </Nav>
+            <Nav>
+              <NavLink>
+                <NavItem className="cart">
+                  <IoMdCart
+                    onClick={handleUpdateCart}
+                    style={{ cursor: "pointer" }}
+                  />
 
-              <span>{listCart.cart.length}</span>
-            </NavItem>
-          </NavLink>
-          {JSON.stringify(currentUser) !== "{}" ? (
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav>
-                <div className="user-symbol">
-                  <img src={currentUser.image} alt={currentUser.userName} />
-                </div>
-              </DropdownToggle>
-              <DropdownMenu end>
-                <DropdownItem>
-                  <NLink to="/profile" style={{ color: "black" }}>
-                    Hồ sơ
-                  </NLink>
-                </DropdownItem>
-                <DropdownItem>
-                  <NLink to="/orderList" style={{ color: "black" }}>
-                    Đơn hàng
-                  </NLink>
-                </DropdownItem>
-                <DropdownItem onClick={handleLogout}>Đăng xuất</DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          ) : (
-            <NLink to="/login" style={{ margin: "8px 0 0 5px" }}>
-              <NavItem className="user">Đăng nhập</NavItem>
-            </NLink>
-          )}
-        </Nav>
-      </Collapse>
-    </Navbar>
+                  <span>{listCart.cart.length}</span>
+                </NavItem>
+              </NavLink>
+              {JSON.stringify(currentUser) !== "{}" ? (
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav>
+                    <div className="user-symbol">
+                      <img src={currentUser.image} alt={currentUser.userName} />
+                    </div>
+                  </DropdownToggle>
+                  <DropdownMenu end>
+                    <DropdownItem>
+                      <NLink to="/profile" style={{ color: "black" }}>
+                        Hồ sơ
+                      </NLink>
+                    </DropdownItem>
+                    <DropdownItem>
+                      <NLink to="/orderList" style={{ color: "black" }}>
+                        Đơn hàng
+                      </NLink>
+                    </DropdownItem>
+                    <DropdownItem onClick={handleLogout}>
+                      Đăng xuất
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              ) : (
+                <NLink to="/login" style={{ margin: "8px 0 0 5px" }}>
+                  <NavItem className="user">
+                    <IoPersonCircle style={{ fontSize: "24px" }} />
+                  </NavItem>
+                </NLink>
+              )}
+            </Nav>
+          </Collapse>
+        </Navbar>
+      ) : (
+        <>
+          <Navbar color="success" light dark={true} sticky="top">
+            <Nav>
+              <div className="search">
+                <Input
+                  onChange={(e) => setSearch(e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(e)}
+                />
+                <span onClick={handleSearch}>
+                  <IoIosSearch />
+                </span>
+              </div>
+            </Nav>
+            <Nav>
+              <NavLink>
+                <NavItem className="cart">
+                  <IoMdCart
+                    onClick={handleUpdateCart}
+                    style={{ cursor: "pointer" }}
+                  />
+
+                  <span>{listCart.cart.length}</span>
+                </NavItem>
+              </NavLink>
+              {JSON.stringify(currentUser) !== "{}" ? (
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav>
+                    <div className="user-symbol">
+                      <img src={currentUser.image} alt={currentUser.userName} />
+                    </div>
+                  </DropdownToggle>
+                  <DropdownMenu end>
+                    <DropdownItem>
+                      <NLink to="/profile" style={{ color: "black" }}>
+                        Hồ sơ
+                      </NLink>
+                    </DropdownItem>
+                    <DropdownItem>
+                      <NLink to="/orderList" style={{ color: "black" }}>
+                        Đơn hàng
+                      </NLink>
+                    </DropdownItem>
+                    <DropdownItem onClick={handleLogout}>
+                      Đăng xuất
+                    </DropdownItem>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+              ) : (
+                <NLink to="/login" style={{ margin: "8px 0 0 5px" }}>
+                  <NavItem className="user">
+                    <IoPersonCircle style={{ fontSize: "24px" }} />
+                  </NavItem>
+                </NLink>
+              )}
+            </Nav>
+            <NavbarBrand
+              style={{ margin: "0px 20px", fontSize: "24px" }}
+              to="/"
+              tag={NLink}
+            >
+              <IoMdHome />
+            </NavbarBrand>
+            <Nav className="me-auto">
+              <NavLink
+                to="/products/men"
+                tag={NLink}
+                style={{ color: "white" }}
+              >
+                Nam
+              </NavLink>
+              <NavLink
+                tag={NLink}
+                to="/products/women"
+                style={{ color: "white" }}
+              >
+                Nữ
+              </NavLink>
+              <NavLink
+                tag={NLink}
+                to="/products/boy"
+                style={{ color: "white" }}
+              >
+                Bé trai
+              </NavLink>
+              <NavLink
+                tag={NLink}
+                to="/products/girl"
+                style={{ color: "white" }}
+              >
+                Bé gái
+              </NavLink>
+            </Nav>
+          </Navbar>
+        </>
+      )}
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
@@ -19,6 +19,7 @@ const ProfileCard = ({ userDetail }) => {
   const token = `Bear ${userDetail.accessToken}`;
   const registerInfor = useSelector((state) => state.user.register);
   const userUpdated = useSelector((state) => state.user.update);
+  const [screen, setScreen] = useState(window.innerWidth);
   const dispatch = useDispatch();
 
   const [formData, setFormdata] = useState({
@@ -38,6 +39,10 @@ const ProfileCard = ({ userDetail }) => {
     phone: "",
     isAdmin: "",
   });
+
+  useEffect(() => {
+    setScreen(window.innerWidth);
+  }, []);
 
   const handleUpload = (e) => {
     setImageFile(e.target.files[0]);
@@ -229,7 +234,10 @@ const ProfileCard = ({ userDetail }) => {
         )}
         <Form
           onSubmit={handleSubmit}
-          style={{ width: "560px", margin: "0px auto" }}
+          style={{
+            width: screen > 768 ? "560px" : "300px",
+            margin: "0px auto",
+          }}
         >
           <Row>
             <Col>
