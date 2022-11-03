@@ -101,3 +101,16 @@ exports.deleteProduct = (req, res, next) => {
     })
     .catch((err) => res.status(404).json(err));
 };
+
+exports.deleteProducts = (req, res, next) => {
+  const productIdList = req.body.idList;
+  const isAdmin = req.body.isAdmin;
+  if (!isAdmin) {
+    return res.status(401).json("Bạn không có quyền xóa sản phẩm này!");
+  }
+  Product.deleteMany({ _id: { $in: productIdList } })
+    .then((result) => {
+      res.status(200).json("Sản phẩm đã được xóa!");
+    })
+    .catch((err) => res.status(404).json(err));
+};

@@ -1,7 +1,7 @@
 exports.users = [
   {
     userName: "El salvado",
-    password: "12345",
+    password: "123456",
     email: "elsvado@gmail.com",
     image:
       "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
@@ -11,17 +11,17 @@ exports.users = [
   },
   {
     userName: "El Pulga",
-    password: "12345",
+    password: "123456",
     email: "elpulga@gmail.com",
     image:
       "https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80",
-    phone: 0912345672,
+    phone: 09123456672,
     address: "9 Nou Camp Street, Barcelona, Spain",
     isAdmin: true,
   },
   {
     userName: "Piano",
-    password: "12345",
+    password: "123456",
     email: "piano@gmail.com",
     image:
       "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
@@ -31,7 +31,7 @@ exports.users = [
   },
   {
     userName: "Pino",
-    password: "12345",
+    password: "123456",
     email: "pino@gmail.com",
     image:
       "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
@@ -41,7 +41,7 @@ exports.users = [
   },
   {
     userName: "Lion",
-    password: "12345",
+    password: "123456",
     email: "lion@gmail.com",
     image:
       "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
@@ -51,7 +51,7 @@ exports.users = [
   },
   {
     userName: "Gustavo",
-    password: "12345",
+    password: "123456",
     email: "gustavo@gmail.com",
     image:
       "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
@@ -61,7 +61,7 @@ exports.users = [
   },
   {
     userName: "Itto",
-    password: "12345",
+    password: "123456",
     email: "itto@gmail.com",
     image:
       "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
@@ -71,7 +71,7 @@ exports.users = [
   },
   {
     userName: "Long",
-    password: "12345",
+    password: "123456",
     email: "long@gmail.com",
     image:
       "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
@@ -81,7 +81,7 @@ exports.users = [
   },
   {
     userName: "Costa",
-    password: "12345",
+    password: "123456",
     email: "costa@gmail.com",
     image:
       "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
@@ -91,7 +91,7 @@ exports.users = [
   },
   {
     userName: "Torres",
-    password: "12345",
+    password: "123456",
     email: "torres@gmail.com",
     image:
       "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",
@@ -101,7 +101,7 @@ exports.users = [
   },
   {
     userName: "Volley",
-    password: "12345",
+    password: "123456",
     email: "volley@gmail.com",
     image:
       "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80",

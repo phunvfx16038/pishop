@@ -6,5 +6,6 @@ router.get("/", isAuth, userRouter.getUsers);
 router.get("/:id", isAuth, userRouter.getUser);
 router.post("/update/:id", isAuth, userRouter.postUpdateUser);
 router.post("/delete/:id", isAuth, userRouter.deleteUser);
+router.post("/deleteMany", isAuth, userRouter.deleteUsers);
 
 module.exports = router;

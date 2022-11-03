@@ -63,3 +63,17 @@ exports.deleteUser = (req, res, next) => {
     return res.status(403).json("Bạn không có quyền xóa tài khoản!");
   }
 };
+
+exports.deleteUsers = (req, res, next) => {
+  const userIdList = req.body.idList;
+  const isAdmin = req.body.isAdmin;
+  console.log(userIdList);
+  if (!isAdmin) {
+    return res.status(401).json("Bạn không có quyền xóa user này!");
+  }
+  User.deleteMany({ _id: { $in: userIdList } })
+    .then((result) => {
+      return res.status(200).json("User đã được xóa!");
+    })
+    .catch((err) => res.status(404).json(err));
+};

@@ -25,7 +25,10 @@ app.use(bodyParser.json());
 
 app.use(
   cors({
-    origin: "https://heroic-sunburst-c0fd56.netlify.app",
+    origin: [
+      "https://heroic-sunburst-c0fd56.netlify.app",
+      "http://localhost:3000",
+    ],
   })
 );
 
