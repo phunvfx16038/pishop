@@ -1,7 +1,52 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
+const { google } = require("googleapis");
+const crypto = require("crypto");
+const dotenv = require("dotenv");
 
+dotenv.config();
+const CLIENT_ID = process.env.CLIENT_ID;
+const CLIENT_SECRET = process.env.CLIENT_SECRET;
+const REDIRECT_URI = process.env.REDIRECT_URI;
+const REFRESH_TOKEN = process.env.REFRESH_TOKEN;
+
+const oAuth2CLient = new google.auth.OAuth2(
+  CLIENT_ID,
+  CLIENT_SECRET,
+  REDIRECT_URI
+);
+oAuth2CLient.setCredentials({ refresh_token: REFRESH_TOKEN });
+
+const sendMail = async (emailUser, token) => {
+  try {
+    const accessToken = await oAuth2CLient.getAccessToken();
+    const transport = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: "phunvfx16038@funix.edu.vn",
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken: accessToken,
+      },
+    });
+    let infor = await transport.sendMail({
+      from: "phunvfx16038@funix.edu.vn",
+      to: emailUser,
+      subject: "Password Reset",
+      html: `
+      <p>You requested a reset password</p>
+      <p>Click this <a href='http://localhost:3000/reset/${token}'>link</a> to set new password</p>
+    `,
+    });
+    return infor;
+  } catch (err) {
+    console.log(err);
+  }
+};
 exports.postLogin = (req, res, next) => {
   const userName = req.body.userName;
   const password = req.body.password;
@@ -74,4 +119,47 @@ exports.postRegister = (req, res, next) => {
         .catch((err) => res.status(404).json(err));
     })
     .catch((err) => res.status(404).json(err));
+};
+
+exports.postResetPassword = (req, res) => {
+  crypto.randomBytes(32, (err, buffer) => {
+    if (err) {
+      return res.status(500).json(err);
+    }
+    const token = buffer.toString("hex");
+    User.findOne({ email: req.body.email })
+      .then((user) => {
+        if (!user) {
+          return res.status(403).json("Email không tồn tại!");
+        }
+        user.resetToken = token;
+        user.resetTokenExpiration = Date.now() + 3600000;
+        return user.save();
+      })
+      .then((result) => {
+        const mailSent = sendMail(req.body.email, token, res);
+        return res.status(200).json(mailSent);
+      });
+  });
+};
+
+exports.postUpdateResetPassword = (req, res) => {
+  const newPassword = req.body.password;
+  const token = req.body.token;
+  let resetUser;
+  User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
+    .then((user) => {
+      resetUser = user;
+      return bcrypt.hash(newPassword, 12);
+    })
+    .then((hashPassword) => {
+      resetUser.password = hashPassword;
+      resetUser.resetToken = undefined;
+      resetUser.resetTokenExpiration = undefined;
+      return resetUser.save();
+    })
+    .then((user) => {
+      return res.status(200).json(user);
+    })
+    .catch((err) => console.log(err));
 };

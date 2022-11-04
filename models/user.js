@@ -24,6 +24,8 @@ const Users = new Schema({
   address: {
     type: String,
   },
+  resetToken: { type: String },
+  resetTokenExpiration: { type: Date },
   isAdmin: {
     type: Boolean,
     default: false,
