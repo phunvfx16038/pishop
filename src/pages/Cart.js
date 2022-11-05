@@ -40,7 +40,7 @@ const Cart = () => {
 
   const handleCheckout = () => {
     const cartId = listCart.fullCart._id;
-    setShow(!show);
+    setShow(true);
     dispatch(updateCart({ cartId, token, cartItems: listCart.cart, status }));
   };
 

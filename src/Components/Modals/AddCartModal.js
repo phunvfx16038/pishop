@@ -28,6 +28,8 @@ const AddToCartModal = ({ callModal, close, type, order }) => {
         dispatch(createOrder({ user, purchase_units, status, token }));
       }
       navigate("/");
+    } else if (type === "resetPassword") {
+      navigate("/login");
     } else {
       close();
     }
@@ -41,6 +43,8 @@ const AddToCartModal = ({ callModal, close, type, order }) => {
         <Modal.Body> Đơn hàng đã được thanh toán!</Modal.Body>
       ) : type === "cancel" ? (
         <Modal.Body style={{ color: "red" }}> Giao dịch thất bại!</Modal.Body>
+      ) : type === "resetPassword" ? (
+        <Modal.Body> Mật khẩu đã được cập nhật. Đi đến đăng nhập!</Modal.Body>
       ) : (
         <Modal.Body> Sản phẩm đã được thêm vào giỏ hàng!</Modal.Body>
       )}

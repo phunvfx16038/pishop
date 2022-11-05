@@ -24,6 +24,8 @@ import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import CheckOutAddress from "./pages/CheckoutAddress";
 import Payment from "./pages/Payment";
 import Orders from "./pages/Orders";
+import UpdatePasswordPage from "./pages/ResetPassword/UpdateResetPassword";
+import ResetPasswordPage from "./pages/ResetPassword/ResetPassword";
 
 function App() {
   const dispatch = useDispatch();
@@ -75,6 +77,8 @@ function App() {
           <Route path="/orderlist" element={<Orders />} />
           <Route path="/order/chekoutAddress" element={<CheckOutAddress />} />
           <Route path="/order/:id" element={<Payment />} />
+          <Route path="/reset" element={<ResetPasswordPage />} />
+          <Route path="/reset/:token" element={<UpdatePasswordPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

@@ -52,6 +52,40 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async (email, { rejectWithValue }) => {
+    try {
+      const res = await axios.post("http://localhost:8080/auth/reset", email);
+      console.log(res.data);
+    } catch (err) {
+      if (!err.response) {
+        throw err.response.data.error;
+      }
+      return rejectWithValue(err.response.data.error);
+    }
+  }
+);
+
+export const updateResetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(
+        `http://localhost:8080/auth/new-password`,
+        data
+      );
+      console.log(res.data);
+      return res.data;
+    } catch (err) {
+      if (!err.response) {
+        throw err.response.data.error;
+      }
+      return rejectWithValue(err.response.data.error);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "auth",
   initialState: {
@@ -71,11 +105,23 @@ const userSlice = createSlice({
       isError: "",
       user: {},
     },
+    resetPw: {
+      user: {},
+      error: "",
+      isLoading: "",
+    },
   },
   reducers: {
     logoutUser: (state, action) => {
       state.login.user = action.payload;
+      state.login.isError = "";
       state.login.isLogged = false;
+      state.register.user = action.payload;
+      state.register.isError = "";
+      state.update.user = action.payload;
+      state.update.isError = "";
+      state.resetPw.user = action.payload;
+      state.resetPw.error = "";
     },
     updateMainAccount: (state, action) => {
       state.login.user = action.payload;
@@ -89,6 +135,7 @@ const userSlice = createSlice({
       .addCase(postRegisterUser.fulfilled, (state, action) => {
         state.register.isLoading = false;
         state.register.user = action.payload;
+        state.register.isError = "";
       })
       .addCase(postRegisterUser.rejected, (state, action) => {
         state.register.isLoading = false;
@@ -101,6 +148,7 @@ const userSlice = createSlice({
         state.login.isLoading = false;
         state.login.user = action.payload;
         state.login.isLogged = true;
+        state.register.isError = "";
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.login.isLoading = false;
@@ -112,10 +160,18 @@ const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         state.update.isLoading = false;
         state.update.user = action.payload;
+        state.update.isError = "";
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.update.isLoading = false;
         state.update.isError = action.payload;
+      })
+      .addCase(updateResetPassword.pending, (state, action) => {
+        state.resetPw.isLoading = true;
+      })
+      .addCase(updateResetPassword.fulfilled, (state, action) => {
+        state.resetPw.isLoading = false;
+        state.resetPw.user = action.payload;
       });
   },
 });

@@ -29,7 +29,6 @@ const Login = () => {
   const [errors, setErrors] = useState({
     userName: "",
     password: "",
-    loginError: "",
   });
 
   const handleChange = (e) => {
@@ -81,7 +80,7 @@ const Login = () => {
 
   return (
     <div>
-      {loginInfor.isError || errors.loginError ? (
+      {loginInfor.isError ? (
         <p
           style={{
             color: "red",
@@ -91,14 +90,14 @@ const Login = () => {
             margin: "10px auto",
           }}
         >
-          {loginInfor.isError || errors.loginError}
+          {loginInfor.isError}
         </p>
       ) : (
         ""
       )}
       <Form className="form-user" onSubmit={handleSubmit}>
         <Form.Group>
-          <Form.Label>User Name</Form.Label>
+          <Form.Label>Tài khoản</Form.Label>
           <Form.Control
             name="userName"
             type="text"
@@ -108,7 +107,7 @@ const Login = () => {
           <p className="error-message">{errors.userName}</p>
         </Form.Group>
         <Form.Group>
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Mật khẩu</Form.Label>
           <Form.Control
             name="password"
             type="password"
@@ -134,9 +133,18 @@ const Login = () => {
             </Button>
           )}
         </Form.Group>
-        <Form.Group>
+        <Form.Group
+          style={{
+            marginTop: "15px",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
           <Link to="/register">
-            <p>Register new account!</p>
+            <p>Đăng ký</p>
+          </Link>
+          <Link to="/reset">
+            <p>Quên mật khẩu?</p>
           </Link>
         </Form.Group>
       </Form>
