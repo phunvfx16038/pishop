@@ -56,8 +56,7 @@ export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (email, { rejectWithValue }) => {
     try {
-      const res = await axios.post("http://localhost:8080/auth/reset", email);
-      console.log(res.data);
+      const res = await axios.post(`${baseUrl}/auth/reset`, email);
     } catch (err) {
       if (!err.response) {
         throw err.response.data.error;
@@ -71,11 +70,7 @@ export const updateResetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (data, { rejectWithValue }) => {
     try {
-      const res = await axios.post(
-        `http://localhost:8080/auth/new-password`,
-        data
-      );
-      console.log(res.data);
+      const res = await axios.post(`${baseUrl}/auth/new-password`, data);
       return res.data;
     } catch (err) {
       if (!err.response) {

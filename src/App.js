@@ -22,7 +22,7 @@ import "@splidejs/splide/css/core";
 import Footer from "./Components/Footer";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import CheckOutAddress from "./pages/CheckoutAddress";
-import Payment from "./pages/Payment";
+import OrderDatail from "./pages/OrderDatail";
 import Orders from "./pages/Orders";
 import UpdatePasswordPage from "./pages/ResetPassword/UpdateResetPassword";
 import ResetPasswordPage from "./pages/ResetPassword/ResetPassword";
@@ -76,7 +76,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/orderlist" element={<Orders />} />
           <Route path="/order/chekoutAddress" element={<CheckOutAddress />} />
-          <Route path="/order/:id" element={<Payment />} />
+          <Route path="/order/:id" element={<OrderDatail />} />
           <Route path="/reset" element={<ResetPasswordPage />} />
           <Route path="/reset/:token" element={<UpdatePasswordPage />} />
           <Route path="*" element={<NotFound />} />

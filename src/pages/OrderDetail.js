@@ -2,7 +2,7 @@ import { Container, Row } from "reactstrap";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
-const Payment = () => {
+const OrderDatail = () => {
   const currentUser = useSelector((state) => state.user.login);
   const location = useLocation();
   const orderDetail = location.state;
@@ -85,4 +85,4 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+export default OrderDatail;
