@@ -3,7 +3,7 @@ const Orders = require("../models/order");
 exports.getOrders = (req, res, next) => {
   const isAdmin = req.user.isAdmin;
   if (!isAdmin) {
-    res.status(404).json("Bạn không có quyền truy cập vào orders này!");
+    res.status(400).json("Bạn không có quyền truy cập vào orders này!");
   }
   Orders.find()
     .then((orders) => {
@@ -20,6 +20,18 @@ exports.getOrderUser = (req, res, next) => {
   Orders.find({ "user.userId": userId })
     .then((orders) => {
       res.status(200).json(orders);
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.getOrder = (req, res) => {
+  const orderId = req.params.orderId;
+  Orders.findOne({ _id: orderId })
+    .then((order) => {
+      if (!order) {
+        return res.status(400).json("Không tìm thấy đơn hàng!");
+      }
+      return res.status(200).json(order);
     })
     .catch((err) => console.log(err));
 };

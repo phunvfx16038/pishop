@@ -42,7 +42,7 @@ const sendMail = async (emailUser, token) => {
       <p>Click this <a href='http://localhost:3000/reset/${token}'>link</a> to set new password</p>
     `,
     });
-    return infor;
+    console.log("success!");
   } catch (err) {
     console.log(err);
   }
@@ -137,8 +137,7 @@ exports.postResetPassword = (req, res) => {
         return user.save();
       })
       .then((result) => {
-        const mailSent = sendMail(req.body.email, token, res);
-        return res.status(200).json(mailSent);
+        sendMail(req.body.email, token);
       });
   });
 };
@@ -160,6 +159,31 @@ exports.postUpdateResetPassword = (req, res) => {
     })
     .then((user) => {
       return res.status(200).json(user);
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.UpdateUserPassword = (req, res) => {
+  const { adminId, userId, password } = req.body;
+  let resetUser;
+  User.findOne({ _id: adminId })
+    .then((userAdmin) => {
+      if (!userAdmin.isAdmin) {
+        return res.status(403).json("Bạn không có quyền cập nhật!");
+      }
+      User.findOne({ _id: userId })
+        .then((user) => {
+          resetUser = user;
+          return bcrypt.hash(password, 12);
+        })
+        .then((hashPassword) => {
+          resetUser.password = hashPassword;
+          return resetUser.save();
+        })
+        .then((user) => {
+          return res.status(200).json(user);
+        })
+        .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
 };
