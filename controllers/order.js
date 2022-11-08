@@ -1,5 +1,5 @@
 const Orders = require("../models/order");
-
+const { validationResult } = require("express-validator");
 exports.getOrders = (req, res, next) => {
   const isAdmin = req.user.isAdmin;
   if (!isAdmin) {
@@ -37,9 +37,17 @@ exports.getOrder = (req, res) => {
 };
 
 exports.createOrder = (req, res, next) => {
-  const { user, purchase_units, status } = req.body;
+  const { userId, name, purchase_units, status } = req.body;
+  const result = validationResult(req);
+  const hasError = !result.isEmpty();
+  if (hasError) {
+    return res.status(400).json({ message: result.array()[0].msg });
+  }
   const order = new Orders({
-    user,
+    user: {
+      userId,
+      name,
+    },
     purchase_units,
     status,
   });
@@ -56,6 +64,11 @@ exports.createOrder = (req, res, next) => {
 exports.updateOrder = (req, res) => {
   const orderId = req.body.orderId;
   const { totalPrice, orderItems, address, status, user } = req.body;
+  const result = validationResult(req);
+  const hasError = !result.isEmpty();
+  if (hasError) {
+    return res.status(400).json({ message: result.array()[0].msg });
+  }
   Orders.findOne({ _id: orderId })
     .then((order) => {
       order.user = user;

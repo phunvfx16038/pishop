@@ -1,6 +1,6 @@
 const User = require("../models/user");
 const bscrypt = require("bcryptjs");
-
+const { validationResult } = require("express-validator");
 exports.getUsers = (req, res, next) => {
   if (req.user.isAdmin) {
     User.find()
@@ -33,6 +33,11 @@ exports.postUpdateUser = (req, res, next) => {
   const id = req.params.id;
   const email = req.body.email;
   const adminRole = req.body.isAdmin;
+
+  const hasError = !result.isEmpty();
+  if (hasError) {
+    return res.status(400).json({ message: result.array()[0].msg });
+  }
 
   if (req.user.isAdmin || id === req.user._id) {
     User.findByIdAndUpdate(

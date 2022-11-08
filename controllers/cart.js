@@ -1,5 +1,5 @@
 const Cart = require("../models/cart");
-
+const { validationResult } = require("express-validator");
 exports.getCarts = (req, res) => {
   const userId = req.params.id;
   Cart.find({ "user.userId": userId })
@@ -10,9 +10,14 @@ exports.getCarts = (req, res) => {
 };
 
 exports.createCart = (req, res) => {
-  const { user, cartItems, status } = req.body;
+  const { userId, name, cartItems, status } = req.body;
+  const result = validationResult(req);
+  const hasError = !result.isEmpty();
+  if (hasError) {
+    return res.status(400).json({ message: result.array()[0].msg });
+  }
   const cart = new Cart({
-    user,
+    user: { userId, name },
     cartItems,
     status,
   });
@@ -28,6 +33,11 @@ exports.updateCart = (req, res) => {
   const cartId = req.body.cartId;
   const cartItems = req.body.cartItems;
   const status = req.body.status;
+  const result = validationResult(req);
+  const hasError = !result.isEmpty();
+  if (hasError) {
+    return res.status(400).json({ message: result.array()[0].msg });
+  }
   Cart.findOne({ _id: cartId })
     .then((cart) => {
       cart.cartItems = cartItems;

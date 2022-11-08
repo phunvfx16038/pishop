@@ -1,5 +1,5 @@
 const Product = require("../models/product");
-
+const { validationResult } = require("express-validator");
 exports.getProducts = (req, res, next) => {
   const productLimit = req.query.limit || 0;
   Product.find()
@@ -46,8 +46,13 @@ exports.createProduct = (req, res, next) => {
   const material = req.body.material;
   const tutorial = req.body.tutorial;
   const thumbnail = req.body.thumbnail;
-
   const isAdmin = req.user.isAdmin;
+
+  const result = validationResult(req);
+  const hasError = !result.isEmpty();
+  if (hasError) {
+    return res.status(400).json({ message: result.array()[0].msg });
+  }
   if (!isAdmin) {
     return res.status(401).json("Bạn không có quyền tạo sản phẩm!");
   }
@@ -72,7 +77,10 @@ exports.createProduct = (req, res, next) => {
 exports.updateProduct = (req, res) => {
   const productId = req.params.id;
   const isAdmin = req.user.isAdmin;
-
+  const hasError = !result.isEmpty();
+  if (hasError) {
+    return res.status(400).json({ message: result.array()[0].msg });
+  }
   if (!isAdmin) {
     return res.status(401).json("Bạn không có quyền cập nhật sản phẩm này!");
   }

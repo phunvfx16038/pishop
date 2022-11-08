@@ -5,6 +5,7 @@ const nodemailer = require("nodemailer");
 const { google } = require("googleapis");
 const crypto = require("crypto");
 const dotenv = require("dotenv");
+const { validationResult } = require("express-validator");
 
 dotenv.config();
 const CLIENT_ID = process.env.CLIENT_ID;
@@ -50,7 +51,11 @@ const sendMail = async (emailUser, token) => {
 exports.postLogin = (req, res, next) => {
   const userName = req.body.userName;
   const password = req.body.password;
-
+  const result = validationResult(req);
+  const hasError = !result.isEmpty();
+  if (hasError) {
+    return res.status(400).json({ message: result.array()[0].msg });
+  }
   User.findOne({ userName: userName })
     .then((user) => {
       if (!user) {
@@ -90,7 +95,11 @@ exports.postRegister = (req, res, next) => {
   const email = req.body.email;
   const address = req.body.address;
   const adminRole = req.body.isAdmin;
-
+  const result = validationResult(req);
+  const hasError = !result.isEmpty();
+  if (hasError) {
+    return res.status(400).json({ message: result.array()[0].msg });
+  }
   User.find({ userName: userName })
     .then((users) => {
       if (users.length !== 0) {
@@ -122,6 +131,11 @@ exports.postRegister = (req, res, next) => {
 };
 
 exports.postResetPassword = (req, res) => {
+  const result = validationResult(req);
+  const hasError = !result.isEmpty();
+  if (hasError) {
+    return res.status(400).json({ message: result.array()[0].msg });
+  }
   crypto.randomBytes(32, (err, buffer) => {
     if (err) {
       return res.status(500).json(err);
@@ -145,6 +159,11 @@ exports.postResetPassword = (req, res) => {
 exports.postUpdateResetPassword = (req, res) => {
   const newPassword = req.body.password;
   const token = req.body.token;
+  const result = validationResult(req);
+  const hasError = !result.isEmpty();
+  if (hasError) {
+    return res.status(400).json({ message: result.array()[0].msg });
+  }
   let resetUser;
   User.findOne({ resetToken: token, resetTokenExpiration: { $gt: Date.now() } })
     .then((user) => {
@@ -165,6 +184,11 @@ exports.postUpdateResetPassword = (req, res) => {
 
 exports.UpdateUserPassword = (req, res) => {
   const { adminId, userId, password } = req.body;
+  const result = validationResult(req);
+  const hasError = !result.isEmpty();
+  if (hasError) {
+    return res.status(400).json({ message: result.array()[0].msg });
+  }
   let resetUser;
   User.findOne({ _id: adminId })
     .then((userAdmin) => {
