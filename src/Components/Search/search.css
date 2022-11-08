@@ -1,0 +1,11 @@
+.search{
+    display: flex;
+}
+
+#search-input{
+    width:70%;
+}
+
+#search-input:focus{
+    box-shadow: none;
+}

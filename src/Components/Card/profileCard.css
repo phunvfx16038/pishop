@@ -1,0 +1,30 @@
+.wrapper-infor{
+    padding:20px;
+    background-color:white ;
+    box-shadow: 2px 2px 2px 2px rgb(155, 150, 150);
+    border-radius: 5px;
+}
+
+.information-user{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.small-title{
+    font-weight: 500;   
+    color: rgb(173, 169, 169);
+}
+
+.information-user .avatar-user{
+    width:200px;
+    height:200px;
+    border-radius: 50%;
+    margin-right:20px;
+}
+
+.information-user .avatar-user img{
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+
+}
