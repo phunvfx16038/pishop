@@ -16,11 +16,11 @@ const Cart = () => {
   const [modalType, setModalType] = useState(null);
   const [order, setOrder] = useState({});
   const [show, setShow] = useState(true);
+
   //status of cart
   const status = "pending";
   const totalPrice = listCart.cart.reduce((result, current) => {
-    const productPrice = current.price.replace(",", "");
-    return (result = result + parseFloat(productPrice) * current.quantity);
+    return (result = result + parseFloat(current.price) * current.quantity);
   }, 0);
 
   const totalPriceFormatted = new Intl.NumberFormat("en-US", {
@@ -40,8 +40,9 @@ const Cart = () => {
 
   const handleCheckout = () => {
     const cartId = listCart.fullCart._id;
-    setShow(true);
     dispatch(updateCart({ cartId, token, cartItems: listCart.cart, status }));
+    // setShow(false);
+    navigate("/checkout");
   };
 
   return (
@@ -93,9 +94,9 @@ const Cart = () => {
             ) : (
               <PaypalCheckoutButton
                 total={Math.round(totalPrice * 100) / 100}
-                cartItems={listCart.cart}
                 currentUser={currentUser}
                 handleChangeStateModal={handleChangeStateModal}
+                cartItems={listCart.cart}
               />
             )}
           </div>

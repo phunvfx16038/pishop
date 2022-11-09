@@ -34,7 +34,7 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const token = `Bear ${currentUser.accessToken}`;
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState("");
   const [screen, setScreen] = useState(window.innerWidth);
   const user = {
     userId,
@@ -62,13 +62,13 @@ const Header = () => {
   const handleUpdateCart = () => {
     const cartId = listCart.fullCart._id;
     dispatch(updateCart({ cartId, token, cartItems: listCart.cart, status }));
-    navigate("/cart");
+    // navigate("/cart");
   };
 
   const handleLogout = () => {
     const resetUser = {};
     const cartReset = [];
-    dispatch(updateCart({ user, token, cartItems: listCart }));
+    dispatch(updateCart({ user, token, cartItems: listCart, status }));
     dispatch(resetCart(cartReset));
     dispatch(logoutUser(resetUser));
     navigate("/");

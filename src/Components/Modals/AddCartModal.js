@@ -20,12 +20,16 @@ const AddToCartModal = ({ callModal, close, type, order }) => {
       dispatch(updateCart({ cartId, token, status: statusCart, cartItems }));
       dispatch(resetCart(cartReset));
       if (order !== null) {
-        const user = {
-          userId: currentUser._id,
-          name: currentUser.userName,
-        };
         const { purchase_units, status } = order;
-        dispatch(createOrder({ user, purchase_units, status, token }));
+        dispatch(
+          createOrder({
+            userId: currentUser._id,
+            name: currentUser.userName,
+            purchase_units,
+            status,
+            token,
+          })
+        );
       }
       navigate("/");
     } else if (type === "resetPassword") {

@@ -2,22 +2,32 @@ import { useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 
 const PaypalCheckoutButton = (props) => {
-  const { total, cartItems, handleChangeStateModal } = props;
-
+  const { total, handleChangeStateModal, cartItems } = props;
   const [paidFor, setPaidFor] = useState(false);
   const [error, setError] = useState(null);
   const [orderData, setOrderData] = useState({});
-  const handleApprove = (order) => {
-    // Call backend function to fulfill order
+  const math = cartItems.map((item) => {
+    return {
+      name: item.title,
+      quantity: item.quantity,
+      unit_amount: {
+        value: Math.round(parseFloat(item.price) * 100 * item.quantity) / 100,
+        currency_code: "USD",
+        breakdown: {
+          item_total: {
+            value: item.price * item.quantity,
+            currency_code: "USD",
+          },
+        },
+      },
+    };
+  });
 
-    // if response is success
+  console.log(math);
+  console.log(total);
+  const handleApprove = (order) => {
     setPaidFor(true);
     setOrderData(order);
-    // Refresh user's account or subscription status
-    // if response is error
-    // alert(
-    //   "Your payment was processed successfully. However, we are unable to fulfill your purchase. Please contact us at support@designcode.io for assistance."
-    // );
   };
 
   const handleCancle = () => {
@@ -25,12 +35,10 @@ const PaypalCheckoutButton = (props) => {
   };
 
   if (paidFor) {
-    // Display success message, modal or redirect user to success page
     handleChangeStateModal(true, "payment", orderData);
   }
 
   if (error) {
-    // Display error message, modal or redirect user to error page
     alert(error);
   }
 
@@ -58,18 +66,7 @@ const PaypalCheckoutButton = (props) => {
                   },
                 },
               },
-              items: cartItems.map((item) => {
-                return {
-                  name: item.title,
-                  quantity: item.quantity,
-                  unit_amount: {
-                    value:
-                      Math.round(parseFloat(item.price) * item.quantity * 100) /
-                      100,
-                    currency_code: "USD",
-                  },
-                };
-              }),
+              items: math,
             },
           ],
         });
@@ -84,11 +81,9 @@ const PaypalCheckoutButton = (props) => {
         console.error("PayPal Checkout onError", err);
       }}
       onCancel={() => {
-        // Display cancel message, modal or redirect user to cancel page or back to cart
         handleCancle();
       }}
       onClick={(data, actions) => {
-        // Validate on button click, client or server side
         const hasAlreadyBoughtCourse = false;
 
         if (hasAlreadyBoughtCourse) {

@@ -12,7 +12,6 @@ const Product = ({ product }) => {
   const [callModal, setCallModal] = useState(false);
   const [callLoginModal, setCallLoginModal] = useState(false);
   const currentUser = useSelector((state) => state.user.login.user);
-  const convertStingPrice = parseFloat(product.price.replace(",", ""));
   const token = `Bear ${currentUser.accessToken}`;
   const listCart = useSelector((state) => state.cart);
   const [screen, setScreen] = useState(window.innerWidth);
@@ -21,7 +20,7 @@ const Product = ({ product }) => {
   const productPrice = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-  }).format(convertStingPrice);
+  }).format(product.price);
 
   useEffect(() => {
     setScreen(window.innerWidth);
@@ -29,11 +28,6 @@ const Product = ({ product }) => {
 
   const handleAddToCart = (product) => {
     if (JSON.stringify(currentUser) !== "{}") {
-      const user = {
-        userId: currentUser._id,
-        name: currentUser.userName,
-      };
-
       const currentProduct = { ...product };
       currentProduct.quantity = quantity;
 
@@ -42,7 +36,15 @@ const Product = ({ product }) => {
       if (listCart.cart.length === 0 && listCart.fullCart.length === 0) {
         const cartItems = [];
         cartItems.push(currentProduct);
-        dispatch(createCart({ cartItems, user, status, token }));
+        dispatch(
+          createCart({
+            cartItems,
+            userId: currentUser._id,
+            name: currentUser.userName,
+            status,
+            token,
+          })
+        );
       } else {
         dispatch(addCart(currentProduct));
       }

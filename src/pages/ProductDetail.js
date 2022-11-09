@@ -44,11 +44,6 @@ const ProductDetail = () => {
 
   const handleAddToCart = (productDetail) => {
     if (JSON.stringify(currentUser) !== "{}") {
-      const user = {
-        userId: currentUser._id,
-        name: currentUser.userName,
-      };
-
       const currentProduct = { ...productDetail };
       currentProduct.quantity = quantity;
 
@@ -59,7 +54,15 @@ const ProductDetail = () => {
       } else {
         const cartItems = [];
         cartItems.push(currentProduct);
-        dispatch(createCart({ cartItems, user, status, token }));
+        dispatch(
+          createCart({
+            cartItems,
+            userId: currentUser._id,
+            name: currentUser.userName,
+            status,
+            token,
+          })
+        );
       }
     } else {
       setCallLoginModal(true);

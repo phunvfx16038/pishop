@@ -6,7 +6,6 @@ const OrderDatail = () => {
   const currentUser = useSelector((state) => state.user.login);
   const location = useLocation();
   const orderDetail = location.state;
-  console.log(orderDetail.purchase_units[0]);
 
   return (
     <Container>

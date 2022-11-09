@@ -11,13 +11,12 @@ import {
 
 const CartItem = ({ product, quantity, type, listCart, token }) => {
   const dispatch = useDispatch();
-  const productPrice = product.price.replace(",", "");
   const [screen, setScreen] = useState(window.innerWidth);
   //status of cart
   const status = "pending";
   const subTotal =
     Math.round(
-      parseFloat(productPrice) * (quantity <= 1 ? 1 : quantity) * 100
+      parseFloat(product.price) * (quantity <= 1 ? 1 : quantity) * 100
     ) / 100;
   const subTotalFormatted = new Intl.NumberFormat("en-US", {
     style: "currency",

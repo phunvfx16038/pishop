@@ -57,6 +57,7 @@ export const resetPassword = createAsyncThunk(
   async (email, { rejectWithValue }) => {
     try {
       const res = await axios.post(`${baseUrl}/auth/reset`, email);
+      return res.data;
     } catch (err) {
       if (!err.response) {
         throw err.response.data.error;
