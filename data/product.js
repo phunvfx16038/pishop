@@ -24,7 +24,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "39.9",
+    price: 39,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/o/8ot22w005-sb633-1-thumb.jpg",
   },
@@ -48,7 +48,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "24.9",
+    price: 24,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/t/8tp21s011-sb052-l-1.jpg",
   },
@@ -78,7 +78,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "59.9",
+    price: 59,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/b/8bj22w002-sj746-3.jpg",
   },
@@ -108,7 +108,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "39.9",
+    price: 39,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/o/8ot22w005-sr019-4.jpg",
   },
@@ -139,7 +139,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "26.9",
+    price: 26,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/t/8ta22s003-sw001-2.jpg",
   },
@@ -161,7 +161,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "14.9",
+    price: 14,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/t/8ts21s001-sw001-l-1.jpg",
   },
@@ -191,7 +191,7 @@ exports.products = [
       "Giặt mặt trái sản phẩm.",
       "Giặt với sản phẩm cùng màu.",
     ],
-    price: "54.9",
+    price: 54,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/t/8tp22s002-sb974-3.jpg",
   },
@@ -222,7 +222,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "26.9",
+    price: 26,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/t/8ta22s004-sb001-2.jpg",
   },
@@ -250,7 +250,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "59.9",
+    price: 59,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/b/8bj22a006-sj745-1.jpg",
   },
@@ -279,7 +279,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "39.9",
+    price: 39,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/o/8ot22w005-sg419-1.jpg",
   },
@@ -308,7 +308,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "69.9",
+    price: 69,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/b/8bj21w005-sj678-2-thumb.jpg",
   },
@@ -339,7 +339,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "39.9",
+    price: 39,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/o/8ot22w005-sk010-3.jpg",
   },
@@ -367,7 +367,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "59.9",
+    price: 59,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/b/8bj22a003-sj712-1.jpg",
   },
@@ -397,7 +397,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "59.9",
+    price: 59,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/b/8bj22a007-sj749-3.jpg",
   },
@@ -426,7 +426,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "39.9",
+    price: 39,
     thumbnail:
       "https://canifa.com/img/212/284/resize/8/o/8ot22w005-sa150-1.jpg",
   },
@@ -458,7 +458,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu. ",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "44.9",
+    price: 44,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/t/6th22s010-dg007-1.jpg",
   },
@@ -486,7 +486,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Tránh xa nguồn lửa.",
     ],
-    price: "49.9",
+    price: 49,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/t/6th22w002-se090-1.jpg",
   },
@@ -516,7 +516,7 @@ exports.products = [
       "Không là lên chi tiết trang trí.",
       "Sản phẩm có thể xù lông.",
     ],
-    price: "44.9",
+    price: 44,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/d/6ds22s018-sk010-1.jpg",
   },
@@ -547,7 +547,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu. ",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "49.9",
+    price: 49,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/b/6bj22w002-sj676-2-thumb.jpg",
   },
@@ -576,7 +576,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "39.9",
+    price: 39,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/t/6th21s005-cp016-2-thumb.jpg",
   },
@@ -604,7 +604,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "44.9",
+    price: 44,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/b/6bj22w001-sj735-1.jpg",
   },
@@ -632,7 +632,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "59.9",
+    price: 59,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/b/6bj22s002-sj707-1.jpg",
   },
@@ -654,7 +654,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "14.9",
+    price: 14,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/t/6th21s009-sw011-s.jpg",
   },
@@ -682,7 +682,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "29.9",
+    price: 29,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/d/6ds22s023-sb128-1.jpg",
   },
@@ -713,7 +713,7 @@ exports.products = [
       "Giặt mặt trái sản phẩm.",
       "Giặt với sản phẩm cùng màu.",
     ],
-    price: "59.9",
+    price: 59,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/d/6ds22w020-ck049-2-thumb.jpg",
   },
@@ -741,7 +741,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "54.9",
+    price: 54,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/d/6ds22s028-fb393-1.jpg",
   },
@@ -769,7 +769,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "52.9",
+    price: 52,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/t/6th21w009-sg447-1.jpg",
   },
@@ -797,7 +797,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "29.9",
+    price: 29,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/d/6ds22w005-sa598-1.jpg",
   },
@@ -819,7 +819,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "49.9",
+    price: 49,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/t/6th21w007-fa078-s-1.jpg",
   },
@@ -848,7 +848,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Làm ẩm sản phẩm khi là.",
     ],
-    price: "44.9",
+    price: 44,
     thumbnail:
       "https://canifa.com/img/212/284/resize/6/t/6th22s008-sb973-m-1.jpg",
   },
@@ -872,7 +872,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "14.9",
+    price: 14,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/d/1ds22w003-sb680-130-1.jpg",
   },
@@ -896,7 +896,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu. ",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "27.9",
+    price: 27,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/t/1tw21w026-sw011-120-1.jpg",
   },
@@ -926,7 +926,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "16.9",
+    price: 16,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/t/1tw22w008-sp072-130-1.jpg",
   },
@@ -950,7 +950,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "16.9",
+    price: 16,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/t/1tw21w017-sb060-120-0.jpg",
   },
@@ -973,7 +973,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "39.9",
+    price: 39,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/d/1ds22w024-sa026-130-1.jpg",
   },
@@ -997,7 +997,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "14.9",
+    price: 14,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/d/1ds22w004-sa014-130-1.jpg",
   },
@@ -1021,7 +1021,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Tránh xa nguồn lửa.",
     ],
-    price: "19.9",
+    price: 19,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/t/1to21c006-sr102-120-1.jpg",
   },
@@ -1044,7 +1044,7 @@ exports.products = [
       "Là ở nhiệt độ thấp 110 độ C.",
       "Giặt với sản phẩm cùng màu.",
     ],
-    price: "29.9",
+    price: 29,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/t/1to21w005-se310-1.jpg",
   },
@@ -1074,7 +1074,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "24.9",
+    price: 24,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/t/1to22w003-sw001-3.jpg",
   },
@@ -1102,7 +1102,7 @@ exports.products = [
       "Là ở nhiệt độ thấp 110 độ c. ",
       "Giặt với sản phẩm cùng màu.",
     ],
-    price: "19.9",
+    price: 19,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/t/1to21w003-db052-2.jpg",
   },
@@ -1132,7 +1132,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "14.9",
+    price: 14,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/d/1ds22w001-so207-130-1.jpg",
   },
@@ -1160,7 +1160,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "32.9",
+    price: 32,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/t/1to22c001-cm045-1.jpg",
   },
@@ -1182,7 +1182,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "27.9",
+    price: 27,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/t/1tw22w034-sk010-130-1.jpg",
   },
@@ -1206,7 +1206,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "16.9",
+    price: 16,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/t/1tw22w010-sb001-130-1.jpg",
   },
@@ -1237,7 +1237,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "19.9",
+    price: 19,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/d/1ds22w013-sb015-2.jpg",
   },
@@ -1259,7 +1259,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "27.9",
+    price: 27,
     thumbnail:
       "https://canifa.com/img/212/284/resize/1/t/1tw22w031-sw011-130-1.jpg",
   },
@@ -1290,7 +1290,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "14.9",
+    price: 14,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/t/2tl22w026-sn247-2.jpg",
   },
@@ -1321,7 +1321,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "24.9",
+    price: 24,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/t/2tl22w013-sw001-2.jpg",
   },
@@ -1345,7 +1345,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "49.9",
+    price: 49,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/b/2bj22c002-sj648-110-1.jpg",
   },
@@ -1367,7 +1367,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "19.9",
+    price: 19,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/t/2tl22w024-sb809-110-1.jpg",
   },
@@ -1388,7 +1388,7 @@ exports.products = [
     description:
       "Áo bomber 2 lớp, cổ và gấu tay, gấu thân bằng bo khớp màu.100% polyester",
     tutorial: [],
-    price: "44.9",
+    price: 44,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/o/2ot21w002-sb150-110-1.jpg",
   },
@@ -1412,7 +1412,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu. ",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "29.9",
+    price: 29,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/o/2ot22w002-sr019-110-1.jpg",
   },
@@ -1443,7 +1443,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "29.9",
+    price: 29,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/b/2bj22w006-sj761-2-thumb.jpg",
   },
@@ -1471,7 +1471,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "39.9",
+    price: 39,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/b/2bj22w002-sj698-1.jpg",
   },
@@ -1501,7 +1501,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu. ",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "29.9",
+    price: 29,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/o/2ot22w002-sg419-4.jpg",
   },
@@ -1524,7 +1524,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "29.9",
+    price: 29,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/o/2ot22w001-fb421-110-1.jpg",
   },
@@ -1546,7 +1546,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "24.9",
+    price: 24,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/t/2tl22w015-sb680-110-1.jpg",
   },
@@ -1574,7 +1574,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "34.9",
+    price: 34,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/b/2bj22w005-sj747-1.jpg",
   },
@@ -1596,7 +1596,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "14.9",
+    price: 14,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/t/2tl22w042-sr019-110-1.jpg",
   },
@@ -1620,7 +1620,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "29.9",
+    price: 29,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/o/2ot22w001-fb422-110-1.jpg",
   },
@@ -1648,7 +1648,7 @@ exports.products = [
       "Giặt với sản phẩm cùng màu.",
       "Không là lên chi tiết trang trí.",
     ],
-    price: "29.9",
+    price: 29,
     thumbnail:
       "https://canifa.com/img/212/284/resize/2/b/2bj22w001-sj757-1.jpg",
   },
