@@ -26,8 +26,9 @@ app.use(bodyParser.json());
 app.use(
   cors({
     origin: [
-      "https://heroic-sunburst-c0fd56.netlify.app",
+      "https://pishopadmin.netlify.app",
       "http://localhost:3000",
+      "https://pishop.netlify.app",
     ],
   })
 );
