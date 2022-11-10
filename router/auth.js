@@ -10,14 +10,7 @@ router.post("/login", authController.postLogin);
 
 router.post("/reset", authController.postResetPassword);
 
-router.post(
-  "/new-password",
-  authController.postUpdateResetPassword
-);
+router.post("/new-password", authController.postUpdateResetPassword);
 
-router.post(
-  "/updatePassword",
-  isAuth,
-  authController.UpdateUserPassword
-);
+router.post("/updatePassword", isAuth, authController.UpdateUserPassword);
 module.exports = router;

@@ -77,6 +77,7 @@ exports.createProduct = (req, res, next) => {
 exports.updateProduct = (req, res) => {
   const productId = req.params.id;
   const isAdmin = req.user.isAdmin;
+  const result = validationResult(req);
   const hasError = !result.isEmpty();
   if (hasError) {
     return res.status(400).json({ message: result.array()[0].msg });

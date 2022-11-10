@@ -33,7 +33,7 @@ exports.postUpdateUser = (req, res, next) => {
   const id = req.params.id;
   const email = req.body.email;
   const adminRole = req.body.isAdmin;
-
+  const result = validationResult(req);
   const hasError = !result.isEmpty();
   if (hasError) {
     return res.status(400).json({ message: result.array()[0].msg });
@@ -72,7 +72,6 @@ exports.deleteUser = (req, res, next) => {
 exports.deleteUsers = (req, res, next) => {
   const userIdList = req.body.idList;
   const isAdmin = req.body.isAdmin;
-  console.log(userIdList);
   if (!isAdmin) {
     return res.status(401).json("Bạn không có quyền xóa user này!");
   }
