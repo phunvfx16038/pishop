@@ -58,15 +58,23 @@ exports.postUpdateUser = (req, res, next) => {
 
 exports.deleteUser = (req, res, next) => {
   const id = req.params.id;
-  if (req.user.isAdmin) {
-    User.findByIdAndDelete(id)
-      .then((result) => {
-        return res.status(200).json("User đã được xóa!");
-      })
-      .catch((err) => res.status(404).json(err));
-  } else {
-    return res.status(403).json("Bạn không có quyền xóa tài khoản!");
-  }
+  User.findById(id)
+    .then((user) => {
+      if (!user.isAdmin) {
+        if (req.user.isAdmin) {
+          User.findByIdAndDelete(id)
+            .then((result) => {
+              return res.status(200).json("User đã được xóa!");
+            })
+            .catch((err) => res.status(404).json(err));
+        } else {
+          return res.status(403).json("Bạn không có quyền xóa tài khoản!");
+        }
+      } else {
+        return res.status(500).json("Không thể xóa tài khoản admin!");
+      }
+    })
+    .catch((err) => res.status(404).json(err));
 };
 
 exports.deleteUsers = (req, res, next) => {
@@ -75,9 +83,15 @@ exports.deleteUsers = (req, res, next) => {
   if (!isAdmin) {
     return res.status(401).json("Bạn không có quyền xóa user này!");
   }
-  User.deleteMany({ _id: { $in: userIdList } })
-    .then((result) => {
-      return res.status(200).json("User đã được xóa!");
-    })
-    .catch((err) => res.status(404).json(err));
+  User.find({ _id: { $in: userIdList } }).then((users) => {
+    const nonAdmin = users.filter((user) => {
+      return user.isAdmin === false;
+    });
+    const listUserDelete = nonAdmin.map((user) => user._id.toString());
+    User.deleteMany({ _id: { $in: listUserDelete } })
+      .then((result) => {
+        return res.status(200).json("User đã được xóa!");
+      })
+      .catch((err) => res.status(404).json(err));
+  });
 };
