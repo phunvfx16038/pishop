@@ -28,6 +28,7 @@ app.use(
     origin: [
       "https://pishopadmin.netlify.app",
       "http://localhost:3000",
+      "http://localhost:3001",
       "https://pishop.netlify.app",
     ],
   })
