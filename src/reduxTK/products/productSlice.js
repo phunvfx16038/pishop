@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const baseUrl = "http://localhost:8080";
+const baseUrl = "https://pishop.onrender.com";
+// "http://localhost:8080";
 export const getProducts = createAsyncThunk("user/getProducts", async () => {
   try {
     const res = await axios.get(`${baseUrl}/products`);

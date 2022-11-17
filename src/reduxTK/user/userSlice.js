@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const baseUrl = "http://localhost:8080";
+const baseUrl = "https://pishop.onrender.com";
+// "http://localhost:8080";
 export const getUsers = createAsyncThunk("user/getUsers", async (token) => {
   try {
     const headers = {
@@ -147,7 +148,6 @@ const userSlice = createSlice({
           return !listUserDelete.includes(user._id);
         });
         state.listUser.users = filterArr;
-        
       }
     },
     resetUpdatedData: (state, action) => {
