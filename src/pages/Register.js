@@ -19,7 +19,6 @@ const Register = () => {
     email: "",
     password: "",
     image: "",
-    address: "",
     phone: "",
     isAdmin: "false",
   });
@@ -29,7 +28,6 @@ const Register = () => {
     email: "",
     password: "",
     image: "",
-    address: "",
     phone: "",
     isAdmin: "",
   });
@@ -88,7 +86,7 @@ const Register = () => {
     let isError = true;
     //validate userName
     if (formData.userName === "") {
-      const message = "UserName can't be empty!";
+      const message = "Tài khoản không được để trống";
       errors.userName = message;
       setErrors({ ...errors });
       isError = false;
@@ -100,12 +98,12 @@ const Register = () => {
 
     //validate email
     if (reg.test(formData.email) === false) {
-      const message = "Email should be included @";
+      const message = "Email phải chứa @";
       errors.email = message;
       setErrors({ ...errors });
       isError = false;
     } else if (formData.email === "") {
-      const message = "Email can't be empty!";
+      const message = "Email không được để trống";
       errors.email = message;
       setErrors({ ...errors });
       isError = false;
@@ -117,12 +115,12 @@ const Register = () => {
 
     //validate password
     if (formData.password.length < 6) {
-      const message = "Name should have at least 6 characters!";
+      const message = "Mật khẩu phải có ít nhất 6 ký tự";
       errors.password = message;
       setErrors({ ...errors });
       isError = false;
     } else if (formData.password === "") {
-      const message = "Password can't be empty!";
+      const message = "Mật khẩu không được bỏ trống";
       errors.password = message;
       setErrors({ ...errors });
       isError = false;
@@ -133,7 +131,7 @@ const Register = () => {
     }
     //validate image
     if (formData.image === "") {
-      const message = "First name can't be empty!";
+      const message = "Hình ảnh không được để trống";
       errors.image = message;
       setErrors({ ...errors });
       isError = false;
@@ -142,26 +140,15 @@ const Register = () => {
       setErrors({ ...errors });
       isError = true;
     }
-    //validate address
-    if (formData.address === "") {
-      const message = "Last name can't be empty!";
-      errors.address = message;
-      setErrors({ ...errors });
-      isError = false;
-    } else {
-      errors.address = "";
-      setErrors({ ...errors });
-      isError = true;
-    }
 
     //validate phone
     if (formData.phone === "") {
-      const message = "Phone number can't be empty!";
+      const message = "Số điện thoại không được để trống";
       errors.phone = message;
       setErrors({ ...errors });
       isError = false;
     } else if (isNaN(formData.phone)) {
-      const message = "Phone number must be number!";
+      const message = "Số điện thoại phải là số!";
       errors.phone = message;
       setErrors({ ...errors });
       isError = false;
@@ -192,7 +179,7 @@ const Register = () => {
       )}
       <Form className="form-user" onSubmit={handleSubmit}>
         <Form.Group>
-          <Form.Label>UserName</Form.Label>
+          <Form.Label>Tài khoản</Form.Label>
           <Form.Control name="userName" type="text" onChange={handleChange} />
           <p className="error-message">{errors.userName}</p>
         </Form.Group>
@@ -201,13 +188,13 @@ const Register = () => {
           <Form.Control
             name="email"
             type="email"
-            value={formData.name}
+            value={formData.email}
             onChange={handleChange}
           />
           <p className="error-message">{errors.email}</p>
         </Form.Group>
         <Form.Group>
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Mật khẩu</Form.Label>
           <Form.Control
             name="password"
             type="password"
@@ -217,12 +204,13 @@ const Register = () => {
           <p className="error-message">{errors.password}</p>
         </Form.Group>
         <Form.Group>
-          <Form.Label>Image</Form.Label>
+          <Form.Label>Avarta</Form.Label>
           <Form.Control
             name="image"
             type="file"
             onChange={(e) => setImageFile(e.target.files[0])}
           />
+          <p className="error-message">{errors.image}</p>
           <div
             style={{
               display: "flex",
@@ -242,20 +230,9 @@ const Register = () => {
               ""
             )}
           </div>
-          <p className="error-message">{errors.image}</p>
         </Form.Group>
         <Form.Group>
-          <Form.Label>Address</Form.Label>
-          <Form.Control
-            name="address"
-            type="text"
-            value={formData.address}
-            onChange={handleChange}
-          />
-          <p className="error-message">{errors.address}</p>
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Phone</Form.Label>
+          <Form.Label>Số điện thoại</Form.Label>
           <Form.Control
             name="phone"
             type="text"
@@ -280,7 +257,7 @@ const Register = () => {
             color="success"
             style={{ width: "100%", marginTop: "20px" }}
           >
-            Register
+            Đăng ký
           </Button>
         )}
       </Form>

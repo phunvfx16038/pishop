@@ -9,10 +9,11 @@ export const postRegisterUser = createAsyncThunk(
       const res = await axios.post(`${baseUrl}auth/register`, user);
       return res.data;
     } catch (err) {
+      console.log(err.response.data.message);
       if (!err.response) {
-        throw err.response.data.error;
+        throw err.response.data.message;
       }
-      return rejectWithValue(err.response.data.error);
+      return rejectWithValue(err.response.data.message);
     }
   }
 );
@@ -56,7 +57,7 @@ export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (email, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`${baseUrl}/auth/reset`, email);
+      const res = await axios.post(`${baseUrl}auth/reset`, email);
       return res.data;
     } catch (err) {
       if (!err.response) {
@@ -71,7 +72,30 @@ export const updateResetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (data, { rejectWithValue }) => {
     try {
-      const res = await axios.post(`${baseUrl}/auth/new-password`, data);
+      const res = await axios.post(`${baseUrl}auth/new-password`, data);
+      return res.data;
+    } catch (err) {
+      if (!err.response) {
+        throw err.response.data.error;
+      }
+      return rejectWithValue(err.response.data.error);
+    }
+  }
+);
+
+export const updatePassword = createAsyncThunk(
+  "auth/updatePawssword",
+  async (data, { rejectWithValue }) => {
+    try {
+      const { token, ...updateInfor } = data;
+      const headers = {
+        token,
+      };
+      const res = await axios.post(
+        `${baseUrl}auth/updatePasswordbyUser`,
+        updateInfor,
+        { headers }
+      );
       return res.data;
     } catch (err) {
       if (!err.response) {
@@ -122,6 +146,9 @@ const userSlice = createSlice({
     updateMainAccount: (state, action) => {
       state.login.user = action.payload;
     },
+    clearUpdated: (state, action) => {
+      state.update.user = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -168,10 +195,23 @@ const userSlice = createSlice({
       .addCase(updateResetPassword.fulfilled, (state, action) => {
         state.resetPw.isLoading = false;
         state.resetPw.user = action.payload;
+      })
+      .addCase(updatePassword.pending, (state, action) => {
+        state.update.isLoading = true;
+      })
+      .addCase(updatePassword.fulfilled, (state, action) => {
+        state.update.isError = "";
+        state.update.isLoading = false;
+        state.update.user = action.payload;
+      })
+      .addCase(updatePassword.rejected, (state, action) => {
+        state.update.isError = action.payload;
+        state.update.isLoading = false;
       });
   },
 });
 
 const { reducer } = userSlice;
-export const { logoutUser, updateMainAccount } = userSlice.actions;
+export const { logoutUser, updateMainAccount, clearUpdated } =
+  userSlice.actions;
 export default reducer;

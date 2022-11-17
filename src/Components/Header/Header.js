@@ -62,7 +62,7 @@ const Header = () => {
   const handleUpdateCart = () => {
     const cartId = listCart.fullCart._id;
     dispatch(updateCart({ cartId, token, cartItems: listCart.cart, status }));
-    // navigate("/cart");
+    navigate("/cart");
   };
 
   const handleLogout = () => {

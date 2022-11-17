@@ -11,7 +11,7 @@ const PaypalCheckoutButton = (props) => {
       name: item.title,
       quantity: item.quantity,
       unit_amount: {
-        value: Math.round(parseFloat(item.price) * 100 * item.quantity) / 100,
+        value: item.price * item.quantity,
         currency_code: "USD",
         breakdown: {
           item_total: {
@@ -23,8 +23,6 @@ const PaypalCheckoutButton = (props) => {
     };
   });
 
-  console.log(math);
-  console.log(total);
   const handleApprove = (order) => {
     setPaidFor(true);
     setOrderData(order);
@@ -41,7 +39,8 @@ const PaypalCheckoutButton = (props) => {
   if (error) {
     alert(error);
   }
-
+  console.log(cartItems);
+  console.log(total);
   return (
     <PayPalButtons
       style={{

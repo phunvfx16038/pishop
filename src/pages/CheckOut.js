@@ -19,7 +19,7 @@ const CheckOut = () => {
     setOrder(orderData);
   };
   return (
-    <>
+    <div style={{ marginTop: "20px" }}>
       <PaypalCheckoutButton
         total={Math.round(totalPrice * 100) / 100}
         currentUser={currentUser}
@@ -32,7 +32,7 @@ const CheckOut = () => {
         type={modalType}
         order={order}
       />
-    </>
+    </div>
   );
 };
 

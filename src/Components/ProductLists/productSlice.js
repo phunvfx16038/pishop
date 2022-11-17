@@ -37,7 +37,6 @@ export const createOrder = createAsyncThunk(
       const res = await axios.post(`${baseUrl}orders/create`, orderData, {
         headers,
       });
-      console.log(res.data);
       return res.data;
     } catch (err) {
       throw err.response.data.error;
@@ -55,6 +54,7 @@ export const getOrderUser = createAsyncThunk(
       const res = await axios.get(`${baseUrl}orders/orderUser/${data.userId}`, {
         headers,
       });
+      console.log(res.data);
       return res.data;
     } catch (err) {
       throw err.response.data.error;
@@ -95,6 +95,7 @@ const productSlice = createSlice({
       currentPage: 1,
     },
     orders: [],
+    createdOrder: [],
   },
   reducers: {
     searchProduct: (state, action) => {
@@ -126,12 +127,9 @@ const productSlice = createSlice({
         state.loading = false;
       })
       .addCase(createOrder.fulfilled, (state, action) => {
-        state.orders = action.payload;
+        state.createdOrder = action.payload;
       })
       .addCase(getOrderUser.fulfilled, (state, action) => {
-        if (JSON.stringify(action.payload) === "{}") {
-          state.orders = [];
-        }
         state.orders = action.payload;
       });
   },

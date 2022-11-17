@@ -11,6 +11,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useDispatch, useSelector } from "react-redux";
 import AddToCartModal from "../Modals/AddCartModal";
 import { updateMainAccount, updateUser } from "../User/userSlice";
+import ChangePasswordModal from "../Modals/ChangePasswordModal";
 
 const ProfileCard = ({ userDetail }) => {
   const [imageFile, setImageFile] = useState(null);
@@ -20,6 +21,7 @@ const ProfileCard = ({ userDetail }) => {
   const registerInfor = useSelector((state) => state.user.register);
   const userUpdated = useSelector((state) => state.user.update);
   const [screen, setScreen] = useState(window.innerWidth);
+  const [callModalChangePassword, setCallModalChangePassword] = useState(false);
   const dispatch = useDispatch();
 
   const [formData, setFormdata] = useState({
@@ -51,6 +53,10 @@ const ProfileCard = ({ userDetail }) => {
     });
   };
 
+  const handleChangePassword = () => {
+    setCallModalChangePassword(true);
+  };
+
   const handleChange = (e) => {
     const value = e.target.value;
     const key = e.target.name;
@@ -74,17 +80,24 @@ const ProfileCard = ({ userDetail }) => {
 
   const validateError = (formData) => {
     const reg = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
-    let isError = true;
+    let isError;
+    let error = {
+      userName: "",
+      email: "",
+      phone: "",
+      address: "",
+      image: "",
+    };
     //validate userName
     if (formData.userName === "") {
       const message = "UserName can't be empty!";
       errors.userName = message;
       setErrors({ ...errors });
-      isError = false;
+      error.userName = false;
     } else {
       errors.userName = "";
       setErrors({ ...errors });
-      isError = true;
+      error.userName = true;
     }
 
     //validate email
@@ -92,16 +105,16 @@ const ProfileCard = ({ userDetail }) => {
       const message = "Email should be included @";
       errors.email = message;
       setErrors({ ...errors });
-      isError = false;
+      error.email = false;
     } else if (formData.email === "") {
       const message = "Email can't be empty!";
       errors.email = message;
       setErrors({ ...errors });
-      isError = false;
+      error.email = false;
     } else {
       errors.email = "";
       setErrors({ ...errors });
-      isError = true;
+      error.email = true;
     }
 
     //validate image
@@ -109,22 +122,22 @@ const ProfileCard = ({ userDetail }) => {
       const message = "Image can't be empty!";
       errors.image = message;
       setErrors({ ...errors });
-      isError = false;
+      error.image = false;
     } else {
       errors.image = "";
       setErrors({ ...errors });
-      isError = true;
+      error.image = true;
     }
     //validate address
     if (formData.address === "") {
       const message = "Address can't be empty!";
       errors.address = message;
       setErrors({ ...errors });
-      isError = false;
+      error.address = false;
     } else {
       errors.address = "";
       setErrors({ ...errors });
-      isError = true;
+      error.address = true;
     }
 
     //validate phone
@@ -132,15 +145,26 @@ const ProfileCard = ({ userDetail }) => {
       const message = "Phone number can't be empty!";
       errors.phone = message;
       setErrors({ ...errors });
-      isError = false;
+      error.phone = false;
     } else if (isNaN(formData.phone)) {
       const message = "Phone number must be number!";
       errors.phone = message;
       setErrors({ ...errors });
-      isError = false;
+      error.phone = false;
     } else {
       errors.phone = "";
       setErrors({ ...errors });
+      error.phone = true;
+    }
+    if (
+      error.address === false ||
+      error.userName === false ||
+      error.email === false ||
+      error.image === false ||
+      error.phone === false
+    ) {
+      isError = false;
+    } else {
       isError = true;
     }
     return isError;
@@ -290,6 +314,12 @@ const ProfileCard = ({ userDetail }) => {
                   onChange={handleChange}
                 />
                 <p className="error-message">{errors.phone}</p>
+                <Button
+                  onClick={handleChangePassword}
+                  style={{ marginTop: "10px" }}
+                >
+                  Thay đổi mật khẩu
+                </Button>
               </Form.Group>
               <Form.Group style={{ display: "none" }}>
                 <Form.Label>Admin</Form.Label>
@@ -328,6 +358,12 @@ const ProfileCard = ({ userDetail }) => {
         callModal={callModal}
         close={() => setCallModal(false)}
         type="profile"
+      />
+      <ChangePasswordModal
+        callModal={callModalChangePassword}
+        close={() => setCallModalChangePassword(false)}
+        userId={userDetail._id}
+        token={token}
       />
     </div>
   );
