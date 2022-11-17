@@ -26,13 +26,14 @@ exports.getUser = (req, res, next) => {
 };
 
 exports.postUpdateUser = (req, res, next) => {
+  const id = req.params.id;
   const userName = req.body.userName;
+  const email = req.body.email;
+  const address = req.body.address;
+  const isAdmin = req.body.isAdmin;
   const image = req.body.image;
   const phone = req.body.phone;
-  const address = req.body.address;
-  const id = req.params.id;
-  const email = req.body.email;
-  const adminRole = req.body.isAdmin;
+
   const result = validationResult(req);
   const hasError = !result.isEmpty();
   if (hasError) {
@@ -40,17 +41,38 @@ exports.postUpdateUser = (req, res, next) => {
   }
 
   if (req.user.isAdmin || id === req.user._id) {
-    User.findByIdAndUpdate(
-      id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    )
-      .then((user) => {
-        res.status(201).json(user);
-      })
-      .catch((err) => res.status(404).json(err));
+    User.findById(id).then((user) => {
+      if (user.isAdmin) {
+        return res.status(500).json("Không thể cập nhật role Admin");
+      } else {
+        user.userName = userName;
+        user.email = email;
+        user.address = address;
+        user.isAdmin = isAdmin;
+        user.image = image;
+        user.phone = phone;
+        user
+          .save()
+          .then((userUpdated) => {
+            return res.status(201).json(userUpdated);
+          })
+          .catch((err) => res.status(404).json(err));
+      }
+    });
+    if (req.body.isAdmin) {
+    } else {
+      User.findByIdAndUpdate(
+        id,
+        {
+          $set: req.body,
+        },
+        { new: true }
+      )
+        .then((user) => {
+          return res.status(201).json(user);
+        })
+        .catch((err) => res.status(404).json(err));
+    }
   } else {
     return res.status(403).json("Bạn không có quyền cập nhật!");
   }
@@ -87,6 +109,9 @@ exports.deleteUsers = (req, res, next) => {
     const nonAdmin = users.filter((user) => {
       return user.isAdmin === false;
     });
+    if (nonAdmin.length === 0) {
+      return res.status(500).json("Không thể xóa tài khoản Admin");
+    }
     const listUserDelete = nonAdmin.map((user) => user._id.toString());
     User.deleteMany({ _id: { $in: listUserDelete } })
       .then((result) => {

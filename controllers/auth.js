@@ -27,7 +27,7 @@ const sendMail = async (emailUser, token) => {
       service: "gmail",
       auth: {
         type: "OAuth2",
-        user: "phunvfx16038@funix.edu.vn",
+        user: "phunguyen2425@gmail.com",
         clientId: CLIENT_ID,
         clientSecret: CLIENT_SECRET,
         refreshToken: REFRESH_TOKEN,
@@ -35,7 +35,7 @@ const sendMail = async (emailUser, token) => {
       },
     });
     let infor = await transport.sendMail({
-      from: "phunvfx16038@funix.edu.vn",
+      from: "phunguyen2425@gmail.com",
       to: emailUser,
       subject: "Password Reset",
       html: `
@@ -59,7 +59,7 @@ exports.postLogin = (req, res, next) => {
   User.findOne({ userName: userName })
     .then((user) => {
       if (!user) {
-        res
+        return res
           .status(403)
           .json({ error: "Tài khoản không tồn tại. Vui lòng kiểm tra lại!" });
       }
@@ -208,6 +208,29 @@ exports.UpdateUserPassword = (req, res) => {
           return res.status(200).json(user);
         })
         .catch((err) => console.log(err));
+    })
+    .catch((err) => console.log(err));
+};
+
+exports.UpdatePassword = (req, res) => {
+  const { userId, password } = req.body;
+  const result = validationResult(req);
+  const hasError = !result.isEmpty();
+  if (hasError) {
+    return res.status(400).json({ message: result.array()[0].msg });
+  }
+  let resetUser;
+  User.findOne({ _id: userId })
+    .then((user) => {
+      resetUser = user;
+      return bcrypt.hash(password, 12);
+    })
+    .then((hashPassword) => {
+      resetUser.password = hashPassword;
+      return resetUser.save();
+    })
+    .then((user) => {
+      return res.status(200).json(user);
     })
     .catch((err) => console.log(err));
 };
