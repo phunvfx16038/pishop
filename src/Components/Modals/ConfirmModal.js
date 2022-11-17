@@ -13,14 +13,22 @@ const ConfirmModal = ({ callModal, close, nameFile, type }) => {
       navigate("/main/users");
       close();
     }
+    if (nameFile === "resetPassword") {
+      navigate("/");
+      close();
+    }
   };
 
   return (
     <Modal show={callModal} onHide={close}>
       {type === "update" ? (
         <Modal.Body>{nameFile} has been updated</Modal.Body>
-      ) : (
+      ) : type === "create" ? (
         <Modal.Body>{nameFile} has been created</Modal.Body>
+      ) : type === "UserReset" ? (
+        <Modal.Body>Password has been updated</Modal.Body>
+      ) : (
+        <Modal.Body>Can't delete Admin user</Modal.Body>
       )}
       <Modal.Footer>
         <Button variant="primary" onClick={handleConfirm}>

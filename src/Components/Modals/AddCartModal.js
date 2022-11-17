@@ -25,7 +25,6 @@ const AddCartModal = ({ callModal, close, token, id, nameFile }) => {
       close();
     }
     if (nameFile === "manyUser") {
-      console.log(id);
       dispatch(
         deleteUsers({ token, idList: id, isAdmin: currentUser.isAdmin })
       );

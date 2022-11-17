@@ -1,14 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
+const baseUrl = "http://localhost:8080";
 export const postRegisterUser = createAsyncThunk(
   "auth/postRegisterUser",
   async (user, { rejectWithValue }) => {
     try {
-      const res = await axios.post(
-        "https://pishop.onrender.com/auth/register",
-        user
-      );
+      const res = await axios.post(`${baseUrl}/auth/register`, user);
       return res.data;
     } catch (err) {
       if (!err.response) {
@@ -23,10 +20,7 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (user, { rejectWithValue }) => {
     try {
-      const res = await axios.post(
-        "https://pishop.onrender.com/auth/login",
-        user
-      );
+      const res = await axios.post(`${baseUrl}/auth/login`, user);
       return res.data;
     } catch (err) {
       if (!err.response) {
@@ -41,10 +35,7 @@ export const resetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (email, { rejectWithValue }) => {
     try {
-      const res = await axios.post(
-        "https://pishop.onrender.com/auth/reset",
-        email
-      );
+      const res = await axios.post(`${baseUrl}/auth/reset`, email);
       console.log(res.data);
     } catch (err) {
       if (!err.response) {
@@ -59,10 +50,7 @@ export const updateResetPassword = createAsyncThunk(
   "auth/resetPassword",
   async (data, { rejectWithValue }) => {
     try {
-      const res = await axios.post(
-        `https://pishop.onrender.com/auth/new-password`,
-        data
-      );
+      const res = await axios.post(`${baseUrl}/auth/new-password`, data);
       console.log(res.data);
       return res.data;
     } catch (err) {
@@ -82,11 +70,9 @@ export const updateUserPassword = createAsyncThunk(
       token,
     };
     try {
-      const res = await axios.post(
-        `https://pishop.onrender.com/auth/updatePassword`,
-        dataBody,
-        { headers }
-      );
+      const res = await axios.post(`${baseUrl}/auth/updatePassword`, dataBody, {
+        headers,
+      });
       console.log(res.data);
       return res.data;
     } catch (err) {
@@ -134,8 +120,14 @@ const authSlice = createSlice({
     updateMainAccount: (state, action) => {
       state.login.user = action.payload;
     },
+    resetData: (state, action) => {
+      state.register.user = action.payload;
+      state.register.isLoading = "";
+      state.register.isError = "";
+    },
     clearUpdated: (state, action) => {
       state.updateUserPw.user = action.payload;
+      state.resetPw.user = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -146,6 +138,7 @@ const authSlice = createSlice({
       .addCase(postRegisterUser.fulfilled, (state, action) => {
         state.register.isLoading = false;
         state.register.user = action.payload;
+        state.register.isError = "";
       })
       .addCase(postRegisterUser.rejected, (state, action) => {
         state.register.isLoading = false;
@@ -157,6 +150,7 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.login.isLoading = false;
         state.login.user = action.payload;
+        state.login.isError = "";
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.login.isLoading = false;
@@ -185,6 +179,6 @@ const authSlice = createSlice({
 });
 
 const { reducer } = authSlice;
-export const { logoutUser, updateMainAccount, clearUpdated } =
+export const { logoutUser, updateMainAccount, clearUpdated, resetData } =
   authSlice.actions;
 export default reducer;

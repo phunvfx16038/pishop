@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -14,7 +14,7 @@ import ConfirmModal from "../../Components/Modals/ConfirmModal";
 const ProductDetail = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.login.user);
-  const updatedProduct = useSelector((state) => state.product.update.product);
+  const updatedProduct = useSelector((state) => state.product.update);
   const token = `Bear ${currentUser.accessToken}`;
   const param = useParams();
   const userId = param.id;
@@ -26,6 +26,9 @@ const ProductDetail = () => {
 
   const [imageFile, setImageFile] = useState(null);
   const [thumbnailFile, setThumbnailFile] = useState(null);
+
+  const categoriesList = ["men", "women", "boy", "girl"];
+
   const [formData, setFormdata] = useState({
     title: detailProduct.title,
     price: detailProduct.price,
@@ -69,7 +72,6 @@ const ProductDetail = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setFormdata((prev) => {
-            console.log(downloadURL);
             return { ...prev, thumbnail: downloadURL };
           });
         });
@@ -120,9 +122,6 @@ const ProductDetail = () => {
     validateError(formData);
     if (validateError(formData)) {
       dispatch(updateProduct({ token, id: userId, formData }));
-      if (updatedProduct) {
-        setCallModal(true);
-      }
     }
   };
 
@@ -222,6 +221,15 @@ const ProductDetail = () => {
     }
     return isError;
   };
+
+  useEffect(() => {
+    if (
+      JSON.stringify(updatedProduct.product) !== "{}" &&
+      validateError(formData)
+    ) {
+      setCallModal(true);
+    }
+  }, [updatedProduct.product, validateError]);
   return (
     <div style={{ padding: "15px" }}>
       <h1 style={{ textAlign: "center" }}>Product Detail</h1>
@@ -341,13 +349,18 @@ const ProductDetail = () => {
             </Form.Group>
             <Form.Group>
               <Form.Label>Categories</Form.Label>
-              <Form.Control
+              <Form.Select
+                style={{ width: "100%", marginBottom: "20px" }}
                 name="categories"
-                type="text"
                 value={formData.categories}
                 onChange={handleChange}
-              />
-              <p className="error-message">{errors.categories}</p>
+              >
+                {categoriesList.map((item, index) => (
+                  <option value={item} key={index}>
+                    {item}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </Col>
         </Row>

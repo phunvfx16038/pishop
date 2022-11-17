@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -23,6 +23,8 @@ const CreateProduct = () => {
   const [thumbnailFile, setThumbnailFile] = useState(null);
   const [durationImageList, setDurationImageList] = useState(null);
   const [durationThumbnail, setDurationThumbnail] = useState(null);
+
+  const categoriesList = ["men", "women", "boy", "girl"];
   const [formData, setFormdata] = useState({
     title: "",
     price: "",
@@ -44,6 +46,12 @@ const CreateProduct = () => {
     categories: "",
     thumbnail: "",
   });
+
+  useEffect(() => {
+    if (JSON.stringify(createNewProductInfor.product) !== "{}") {
+      setCallModal(true);
+    }
+  }, [createNewProductInfor.product]);
 
   const uploadImage = () => {
     if (thumbnailFile === null) {
@@ -114,12 +122,6 @@ const CreateProduct = () => {
     if (validateError(formData)) {
       dispatch(createNewProduct({ formData }));
       dispatch(createProduct({ formData, token }));
-      if (
-        createNewProductInfor.isLoading === false &&
-        JSON.stringify(createNewProductInfor.product) !== "{}"
-      ) {
-        setCallModal(true);
-      }
     }
   };
 
@@ -294,11 +296,18 @@ const CreateProduct = () => {
             </Form.Group>
             <Form.Group>
               <Form.Label>Categories</Form.Label>
-              <Form.Control
+              <Form.Select
+                style={{ width: "100%", marginBottom: "20px" }}
                 name="categories"
-                type="text"
+                value={formData.categories}
                 onChange={handleChange}
-              />
+              >
+                {categoriesList.map((item, index) => (
+                  <option value={item} key={index}>
+                    {item}
+                  </option>
+                ))}
+              </Form.Select>
               <p className="error-message">{errors.categories}</p>
             </Form.Group>
             <Form.Group>

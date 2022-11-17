@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -16,6 +16,7 @@ const CreateUser = () => {
   const [callModal, setCallModal] = useState(false);
   const [imageFile, setImageFile] = useState(null);
   const [duration, setDuration] = useState(null);
+
   const [formData, setFormdata] = useState({
     userName: "",
     email: "",
@@ -33,6 +34,12 @@ const CreateUser = () => {
     phone: "",
     isAdmin: "",
   });
+
+  useEffect(() => {
+    if (JSON.stringify(registerInfor.user) !== "{}") {
+      setCallModal(true);
+    }
+  }, [registerInfor.user]);
 
   const upload = () => {
     if (imageFile === null) return;
@@ -72,12 +79,6 @@ const CreateUser = () => {
     validateError(formData);
     if (validateError(formData)) {
       dispatch(postRegisterUser(formData));
-      if (
-        registerInfor.isLoading === false &&
-        JSON.stringify(registerInfor.user) !== "{}"
-      ) {
-        setCallModal(true);
-      }
     }
   };
 
@@ -172,7 +173,7 @@ const CreateUser = () => {
   };
   return (
     <div style={{ padding: "15px" }}>
-      <h1 style={{ textAlign: "center" }}>User Detail</h1>
+      <h1 style={{ textAlign: "center" }}>Create User</h1>
       {registerInfor.isError ? (
         <p
           style={{
@@ -294,6 +295,7 @@ const CreateUser = () => {
         callModal={callModal}
         close={() => setCallModal(false)}
         nameFile="User"
+        type="create"
       />
     </div>
   );

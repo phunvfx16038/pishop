@@ -1,33 +1,18 @@
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Row from "react-bootstrap/esm/Row";
-import { useDispatch, useSelector } from "react-redux";
-import { getOrder } from "../../reduxTK/orders/OrderSlice";
 import Spinner from "react-bootstrap/Spinner";
-import { useEffect, useState } from "react";
-
+import "./orderDetail.css";
 const OrderDatail = () => {
   const location = useLocation();
-  const orderData = location.state.order;
-  const currentUser = useSelector((state) => state.auth.login.user);
-  const token = `Bear ${currentUser.accessToken}`;
-  const param = useParams();
-  const dispatch = useDispatch();
-  const orderId = param.id;
-  const [order, setOrder] = useState(orderData);
-  const orderRedux = useSelector((state) => state.order.getOrder.order);
-  console.log(orderData);
-  useEffect(() => {
-    setOrder(orderRedux);
-    dispatch(getOrder({ token, orderId }));
-  }, [dispatch, token, orderId, orderRedux]);
+  const order = location.state.order;
+
   return (
     <div>
-      {console.log(order)}
       <Row>
         {order.isLoading ? (
           <Spinner />
         ) : JSON.stringify(order.user) !== "{}" ? (
-          <>
+          <div style={{ padding: "20px" }}>
             <div
               style={{
                 fontSize: "22px",
@@ -43,8 +28,8 @@ const OrderDatail = () => {
               </div>
             </div>
             <h4 style={{ textAlign: "center" }}>Danh sục sản phẩm</h4>
-            {order.purchase_units[0].items.map((product) => (
-              <div className="item">
+            {order.purchase_units[0].items.map((product, index) => (
+              <div className="item" key={index}>
                 <p className="name-product">{product.name}</p>
                 <div className="qtn-product">
                   <label>Số lượng</label>
@@ -84,9 +69,9 @@ const OrderDatail = () => {
                 ${order.purchase_units[0].amount.value}
               </p>
             </div>
-          </>
+          </div>
         ) : (
-          <div>Không có đơn hàng</div>
+          <div style={{ paddins: "20px" }}>Không có đơn hàng</div>
         )}
       </Row>
     </div>

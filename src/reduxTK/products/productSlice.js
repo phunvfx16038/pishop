@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
+const baseUrl = "http://localhost:8080";
 export const getProducts = createAsyncThunk("user/getProducts", async () => {
   try {
-    const res = await axios.get("https://pishop.onrender.com/products");
+    const res = await axios.get(`${baseUrl}/products`);
     return res.data;
   } catch (err) {
     throw err.response.data.error;
@@ -19,7 +19,7 @@ export const updateProduct = createAsyncThunk(
       };
       const updateData = data.formData;
       const res = await axios.post(
-        `https://pishop.onrender.com/products/update/${data.id}`,
+        `${baseUrl}/products/update/${data.id}`,
         updateData,
         { headers }
       );
@@ -38,11 +38,9 @@ export const createProduct = createAsyncThunk(
         token: data.token,
       };
       const createData = data.formData;
-      const res = await axios.post(
-        `https://pishop.onrender.com/products/create`,
-        createData,
-        { headers }
-      );
+      const res = await axios.post(`${baseUrl}/products/create`, createData, {
+        headers,
+      });
       return res.data;
     } catch (err) {
       throw err.response.data.error;
@@ -58,7 +56,7 @@ export const deleteProduct = createAsyncThunk(
         token: data.token,
       };
       const res = await axios.post(
-        `https://pishop.onrender.com/products/delete/${data.id}`,
+        `${baseUrl}/products/delete/${data.id}`,
         null,
         { headers }
       );
@@ -77,11 +75,9 @@ export const deleteProducts = createAsyncThunk(
       const headers = {
         token,
       };
-      const res = await axios.post(
-        `https://pishop.onrender.com/products/deleteMany`,
-        dataBody,
-        { headers }
-      );
+      const res = await axios.post(`${baseUrl}/products/deleteMany`, dataBody, {
+        headers,
+      });
       console.log(res.data);
       return res.data;
     } catch (err) {
@@ -108,6 +104,11 @@ const productSlice = createSlice({
       isError: null,
       product: {},
     },
+    paginationData: {
+      productPerPage: 10,
+      active: 1,
+      currentPage: 1,
+    },
   },
   reducers: {
     deleteProductAction: (state, action) => {
@@ -128,13 +129,26 @@ const productSlice = createSlice({
         action.payload,
       ];
     },
+    resetData: (state, action) => {
+      state.update.product = action.payload;
+      state.update.isError = "";
+      state.update.isLoading = "";
+      state.update.create = action.payload;
+      state.update.isError = "";
+      state.update.isLoading = "";
+    },
     searchProduct: (state, action) => {
-      const searchArr = state.getProducts.products.filter((product) => {
-        return product.title
-          .toLowerCase()
-          .includes(action.payload.toLowerCase());
-      });
-      state.getProducts.products = searchArr;
+      if (action.payload !== "") {
+        const searchArr = state.getProducts.products.filter((product) => {
+          return product.title
+            .toLowerCase()
+            .includes(action.payload.toLowerCase());
+        });
+        state.getProducts.products = searchArr;
+      }
+    },
+    getProductPagination: (state, action) => {
+      state.paginationData = action.payload;
     },
     sortUp: (state, action) => {
       const type = action.payload;
@@ -198,6 +212,7 @@ const productSlice = createSlice({
       .addCase(updateProduct.fulfilled, (state, action) => {
         state.update.isLoading = false;
         state.update.product = action.payload;
+        state.update.isError = "";
       })
       .addCase(updateProduct.rejected, (state, action) => {
         state.update.isLoading = false;
@@ -209,6 +224,7 @@ const productSlice = createSlice({
       .addCase(createProduct.fulfilled, (state, action) => {
         state.create.isLoading = true;
         state.create.product = action.payload;
+        state.create.isError = "";
       })
       .addCase(createProduct.rejected, (state, action) => {
         state.create.isLoading = false;
@@ -225,5 +241,7 @@ export const {
   deleteManyProducts,
   sortUp,
   sortDown,
+  resetData,
+  getProductPagination,
 } = productSlice.actions;
 export default reducer;

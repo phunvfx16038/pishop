@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
+const baseUrl = "http://localhost:8080";
 export const getOrders = createAsyncThunk("orders/getOrders", async (token) => {
   try {
     const headers = {
       token: token,
     };
-    const res = await axios.get("https://pishop.onrender.com/orders", {
+    const res = await axios.get(`${baseUrl}/orders`, {
       headers,
     });
     return res.data;
@@ -22,12 +22,9 @@ export const getOrder = createAsyncThunk("orders/getOrder", async (data) => {
     const headers = {
       token: token,
     };
-    const res = await axios.get(
-      `https://pishop.onrender.com/orders/${orderId}`,
-      {
-        headers,
-      }
-    );
+    const res = await axios.get(`${baseUrl}/orders/${orderId}`, {
+      headers,
+    });
     console.log(res.data);
     return res.data;
   } catch (err) {
@@ -48,6 +45,11 @@ const orderSlice = createSlice({
       isError: null,
       order: [],
     },
+    paginationData: {
+      productPerPage: 10,
+      active: 1,
+      currentPage: 1,
+    },
   },
   reducers: {
     searchOrder: (state, action) => {
@@ -57,6 +59,9 @@ const orderSlice = createSlice({
           .includes(action.payload.toLowerCase());
       });
       state.getOrders.orders = searchArr;
+    },
+    getOrderPagination: (state, action) => {
+      state.paginationData = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -87,5 +92,5 @@ const orderSlice = createSlice({
 });
 
 const { reducer } = orderSlice;
-export const { searchOrder } = orderSlice.actions;
+export const { searchOrder, getOrderPagination } = orderSlice.actions;
 export default reducer;

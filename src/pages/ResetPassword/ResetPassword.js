@@ -42,7 +42,7 @@ const ResetPasswordPage = () => {
   return (
     <div>
       {show ? (
-        <p>
+        <p style={{ textAlign: "center" }}>
           Vui lòng kiểm tra email để cập nhật mật khẩu.Nếu chưa nhận được email
           vui lòng nhấn lại nút bên dưới.
         </p>

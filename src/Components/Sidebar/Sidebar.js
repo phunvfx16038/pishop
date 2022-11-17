@@ -10,14 +10,20 @@ import {
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../reduxTK/auth/authSlice";
+import { resetUpdatedData } from "../../reduxTK/user/userSlice";
 
 const Sidebar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const reset = {};
   const handleLogout = () => {
-    const reset = {};
     dispatch(logoutUser(reset));
     navigate("/");
+  };
+
+  const handleClickProfile = () => {
+    dispatch(resetUpdatedData(reset));
+    navigate("/main/profile");
   };
   return (
     <Nav
@@ -93,8 +99,7 @@ const Sidebar = () => {
         User
         <Nav.Item className="navItem">
           <Nav.Link
-            as={Link}
-            to="/main/profile"
+            onClick={handleClickProfile}
             style={{ color: "white", marginTop: "10px" }}
             eventKey="/main/profile"
           >

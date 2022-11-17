@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
+const baseUrl = "http://localhost:8080";
 export const getUsers = createAsyncThunk("user/getUsers", async (token) => {
   try {
     const headers = {
       token: token,
     };
-    const res = await axios.get("https://pishop.onrender.com/users/", {
+    const res = await axios.get(`${baseUrl}/users/`, {
       headers,
     });
     return res.data;
@@ -22,7 +22,7 @@ export const updateUser = createAsyncThunk("user/updateUser", async (data) => {
     };
     const updateData = data.formData;
     const res = await axios.post(
-      `https://pishop.onrender.com/users/update/${data.id}`,
+      `${baseUrl}/users/update/${data.id}`,
       updateData,
       {
         headers,
@@ -41,11 +41,9 @@ export const deleteUser = createAsyncThunk("user/deleteUser", async (data) => {
       token: data.token,
     };
 
-    const res = await axios.post(
-      `https://pishop.onrender.com/users/delete/${data.id}`,
-      null,
-      { headers }
-    );
+    const res = await axios.post(`${baseUrl}/users/delete/${data.id}`, null, {
+      headers,
+    });
 
     return res.data;
   } catch (err) {
@@ -61,15 +59,36 @@ export const deleteUsers = createAsyncThunk(
       const headers = {
         token,
       };
-      const res = await axios.post(
-        `https://pishop.onrender.com/users/deleteMany`,
-        dataBody,
-        { headers }
-      );
+      const res = await axios.post(`${baseUrl}/users/deleteMany`, dataBody, {
+        headers,
+      });
       console.log(res.data);
       return res.data;
     } catch (err) {
       throw err.response.data.error;
+    }
+  }
+);
+
+export const updatePassword = createAsyncThunk(
+  "auth/updatePawssword",
+  async (data, { rejectWithValue }) => {
+    try {
+      const { token, ...updateInfor } = data;
+      const headers = {
+        token,
+      };
+      const res = await axios.post(
+        `${baseUrl}/auth/updatePasswordbyUser`,
+        updateInfor,
+        { headers }
+      );
+      return res.data;
+    } catch (err) {
+      if (!err.response) {
+        throw err.response.data.error;
+      }
+      return rejectWithValue(err.response.data.error);
     }
   }
 );
@@ -92,19 +111,50 @@ const userSlice = createSlice({
       isError: "",
       isLoading: "",
     },
+    paginationData: {
+      productPerPage: 10,
+      active: 1,
+      currentPage: 1,
+    },
   },
   reducers: {
     deleteUserAction: (state, action) => {
-      const usersRemain = state.listUser.users.filter((user) => {
-        return user._id !== action.payload.id;
-      });
-      state.listUser.users = usersRemain;
+      const userIndex = state.listUser.users.findIndex(
+        (user) => user._id === action.payload.id
+      );
+      const userDelete = state.listUser.users[userIndex];
+      if (userDelete.isAdmin === false) {
+        const usersRemain = state.listUser.users.filter((user) => {
+          return user._id !== userDelete._id;
+        });
+        state.listUser.users = usersRemain;
+      } else {
+        state.delete.complete = false;
+      }
     },
     deleteManyUsers: (state, action) => {
-      const filterArr = state.listUser.users.filter((user) => {
-        return !action.payload.includes(user._id);
+      const listUserSelected = state.listUser.users.filter((user) => {
+        return action.payload.includes(user._id);
       });
-      state.listUser.users = filterArr;
+      const nonAdmin = listUserSelected.filter((user) => {
+        return user.isAdmin === false;
+      });
+      if (nonAdmin.length === 0) {
+        state.delete.complete = false;
+      } else {
+        const listUserDelete = nonAdmin.map((user) => user._id.toString());
+        const filterArr = state.listUser.users.filter((user) => {
+          return !listUserDelete.includes(user._id);
+        });
+        state.listUser.users = filterArr;
+        
+      }
+    },
+    resetUpdatedData: (state, action) => {
+      state.update.user = action.payload;
+      state.update.isLoading = "";
+      state.update.isError = "";
+      state.delete.complete = "";
     },
     searchUser: (state, action) => {
       const searchArr = state.listUser.users.filter((user) => {
@@ -113,6 +163,9 @@ const userSlice = createSlice({
           .includes(action.payload.toLowerCase());
       });
       state.listUser.users = searchArr;
+    },
+    getUserPagination: (state, action) => {
+      state.paginationData = action.payload;
     },
     sortUp: (state, action) => {
       const type = action.payload;
@@ -192,6 +245,18 @@ const userSlice = createSlice({
       .addCase(updateUser.rejected, (state, action) => {
         state.update.isLoading = false;
         state.update.isError = action.payload;
+      })
+      .addCase(updatePassword.pending, (state, action) => {
+        state.update.isLoading = true;
+      })
+      .addCase(updatePassword.fulfilled, (state, action) => {
+        state.update.isError = "";
+        state.update.isLoading = false;
+        state.update.user = action.payload;
+      })
+      .addCase(updatePassword.rejected, (state, action) => {
+        state.update.isError = action.payload;
+        state.update.isLoading = false;
       });
   },
 });
@@ -203,5 +268,7 @@ export const {
   deleteManyUsers,
   sortUp,
   sortDown,
+  resetUpdatedData,
+  getUserPagination,
 } = userSlice.actions;
 export default reducer;

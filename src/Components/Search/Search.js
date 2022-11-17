@@ -9,7 +9,7 @@ import { searchProduct } from "../../reduxTK/products/productSlice";
 import { searchUser } from "../../reduxTK/user/userSlice";
 import "./search.css";
 const Search = () => {
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState("");
   const dispatch = useDispatch();
   const location = useLocation();
 

@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -46,6 +46,109 @@ const UpdataInfor = () => {
     isAdmin: "",
   });
 
+  const validateError = (formData) => {
+    const reg = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
+    let isError;
+    let error = {
+      userName: "",
+      email: "",
+      phone: "",
+      address: "",
+      image: "",
+    };
+    //validate userName
+    if (formData.userName === "") {
+      isError = true;
+      const message = "UserName can't be empty!";
+      errors.userName = message;
+      setErrors({ ...errors });
+      error.userName = false;
+    } else {
+      errors.userName = "";
+      setErrors({ ...errors });
+      error.userName = true;
+    }
+
+    //validate email
+    if (formData.email === "") {
+      const message = "Email can't be empty!";
+      errors.email = message;
+      setErrors({ ...errors });
+      error.email = false;
+    } else if (reg.test(formData.email) === false) {
+      const message = "Email should be included @";
+      errors.email = message;
+      setErrors({ ...errors });
+      error.email = false;
+    } else {
+      errors.email = "";
+      setErrors({ ...errors });
+      error.email = true;
+    }
+    //validate image
+    if (formData.image === "") {
+      const message = "Image can't be empty!";
+      errors.image = message;
+      setErrors({ ...errors });
+      error.image = false;
+    } else {
+      errors.image = "";
+      setErrors({ ...errors });
+      error.image = true;
+    }
+    //validate address
+    if (formData.address === "") {
+      const message = "Address can't be empty!";
+      errors.address = message;
+      setErrors({ ...errors });
+      error.address = false;
+    } else {
+      errors.address = "";
+      setErrors({ ...errors });
+      error.address = true;
+    }
+
+    //validate phone
+    if (formData.phone === "") {
+      const message = "Phone number can't be empty!";
+      errors.phone = message;
+      setErrors({ ...errors });
+      error.phone = false;
+    } else if (isNaN(formData.phone)) {
+      const message = "Phone number must be number!";
+      errors.phone = message;
+      setErrors({ ...errors });
+      error.phone = false;
+    } else {
+      errors.phone = "";
+      setErrors({ ...errors });
+      error.phone = true;
+    }
+    if (
+      error.address === false ||
+      error.userName === false ||
+      error.email === false ||
+      error.image === false ||
+      error.phone === false
+    ) {
+      isError = false;
+    } else {
+      isError = true;
+    }
+
+    return isError;
+  };
+  const handleChangePassword = () => {
+    setCallModalChangePassword(true);
+  };
+
+  useEffect(() => {
+    // const checkData = validateError(formData);
+    // console.log(checkData);
+    if (JSON.stringify(userUpdated.user) !== "{}") {
+      setCallModal(true);
+    }
+  }, [userUpdated.user]);
   const upload = () => {
     if (imageFile === null) return;
     const imageRef = ref(storage, `images/${imageFile.name}`);
@@ -65,7 +168,6 @@ const UpdataInfor = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setFormdata((prev) => {
-            console.log(downloadURL);
             return { ...prev, image: downloadURL };
           });
         });
@@ -85,107 +187,8 @@ const UpdataInfor = () => {
     validateError(formData);
     if (validateError(formData)) {
       dispatch(updateUser({ token, id: userId, formData }));
-      if (userUpdated.user) {
-        setCallModal(true);
-      }
     }
   };
-
-  const validateError = (formData) => {
-    const reg = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
-    let isError = true;
-    //validate userName
-    if (formData.userName === "") {
-      const message = "UserName can't be empty!";
-      errors.userName = message;
-      setErrors({ ...errors });
-      isError = false;
-    } else {
-      errors.userName = "";
-      setErrors({ ...errors });
-      isError = true;
-    }
-
-    //validate email
-    if (reg.test(formData.email) === false) {
-      const message = "Email should be included @";
-      errors.email = message;
-      setErrors({ ...errors });
-      isError = false;
-    } else if (formData.email === "") {
-      const message = "Email can't be empty!";
-      errors.email = message;
-      setErrors({ ...errors });
-      isError = false;
-    } else {
-      errors.email = "";
-      setErrors({ ...errors });
-      isError = true;
-    }
-
-    //validate password
-    // if (formData.password.length < 6) {
-    //   const message = "Name should have at least 6 characters!";
-    //   errors.password = message;
-    //   setErrors({ ...errors });
-    //   isError = false;
-    // } else if (formData.password === "") {
-    //   const message = "Password can't be empty!";
-    //   errors.password = message;
-    //   setErrors({ ...errors });
-    //   isError = false;
-    // } else {
-    //   errors.password = "";
-    //   setErrors({ ...errors });
-    //   isError = true;
-    // }
-    //validate image
-    if (formData.image === "") {
-      const message = "Image can't be empty!";
-      errors.image = message;
-      setErrors({ ...errors });
-      isError = false;
-    } else {
-      errors.image = "";
-      setErrors({ ...errors });
-      isError = true;
-    }
-    //validate address
-    if (formData.address === "") {
-      const message = "Address can't be empty!";
-      errors.address = message;
-      setErrors({ ...errors });
-      isError = false;
-    } else {
-      errors.address = "";
-      setErrors({ ...errors });
-      isError = true;
-    }
-
-    //validate phone
-    if (formData.phone === "") {
-      const message = "Phone number can't be empty!";
-      errors.phone = message;
-      setErrors({ ...errors });
-      isError = false;
-    } else if (isNaN(formData.phone)) {
-      const message = "Phone number must be number!";
-      errors.phone = message;
-      setErrors({ ...errors });
-      isError = false;
-    } else {
-      errors.phone = "";
-      setErrors({ ...errors });
-      isError = true;
-    }
-    return isError;
-  };
-
-  const handleChangePassword = () => {
-    console.log("hello");
-    setCallModalChangePassword(true);
-  };
-
   return (
     <div style={{ padding: "15px" }}>
       <h1 style={{ textAlign: "center" }}>User Detail</h1>
@@ -227,16 +230,6 @@ const UpdataInfor = () => {
               />
               <p className="error-message">{errors.email}</p>
             </Form.Group>
-            {/* <Form.Group>
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                name="password"
-                type="password"
-                value={formData.password}
-                onChange={handleChange}
-              />
-              <p className="error-message">{errors.password}</p>
-            </Form.Group> */}
             <Form.Group>
               <Form.Label>Image</Form.Label>
               <Form.Control
@@ -296,6 +289,7 @@ const UpdataInfor = () => {
                   type="select"
                   value={formData.isAdmin}
                   onChange={handleChange}
+                  disabled={detailUser.isAdmin ? true : false}
                 >
                   <option value="false">False</option>
                   <option value="true">True </option>
@@ -338,6 +332,7 @@ const UpdataInfor = () => {
         adminId={currentUser._id}
         userId={userId}
         token={token}
+        type="user"
       />
     </div>
   );
