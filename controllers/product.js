@@ -43,8 +43,8 @@ exports.createProduct = (req, res, next) => {
   const description = req.body.description;
   const imageUrl = req.body.imageUrl;
   const categories = req.body.categories;
-  const material = req.body.material;
   const tutorial = req.body.tutorial;
+  const size = req.body.size;
   const thumbnail = req.body.thumbnail;
   const isAdmin = req.user.isAdmin;
 
@@ -62,7 +62,7 @@ exports.createProduct = (req, res, next) => {
     imageUrl: imageUrl,
     description: description,
     categories: categories,
-    material: material,
+    size: size,
     tutorial: tutorial,
     thumbnail: thumbnail,
   });
