@@ -43,7 +43,18 @@ exports.postUpdateUser = (req, res, next) => {
   if (req.user.isAdmin || id === req.user._id) {
     User.findById(id).then((user) => {
       if (user.isAdmin) {
-        return res.status(500).json("Không thể cập nhật role Admin");
+        user.userName = userName;
+        user.email = email;
+        user.address = address;
+        user.isAdmin = true;
+        user.image = image;
+        user.phone = phone;
+        user
+          .save()
+          .then((userUpdated) => {
+            return res.status(201).json(userUpdated);
+          })
+          .catch((err) => res.status(404).json(err));
       } else {
         user.userName = userName;
         user.email = email;
