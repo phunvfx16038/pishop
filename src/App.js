@@ -12,7 +12,6 @@ import Col from "react-bootstrap/Col";
 import Register from "./pages/Register/Register";
 import UpdataInfor from "./pages/User/UpdateInfor";
 import { useSelector } from "react-redux";
-import NotFound from "./Components/Not Found/NotFound";
 import ProductsList from "./pages/Products/ProductsList";
 import ProductDetail from "./pages/Products/ProductDetail";
 import CreateProduct from "./pages/Products/CreateProduct";
@@ -22,6 +21,7 @@ import OrderDatail from "./pages/Orders/OrderDetail";
 import Profile from "./pages/User/Profile";
 import ResetPasswordPage from "./pages/ResetPassword/ResetPassword";
 import UpdatePasswordPage from "./pages/ResetPassword/UpdateResetPassword";
+import NotFound from "./NotFound/NotFound";
 
 function App() {
   const isLoginRoute = useMatch("/");
@@ -87,6 +87,7 @@ function App() {
           <Route path="/" element={<Login />} />
           <Route exact path="/reset" element={<ResetPasswordPage />} />
           <Route path="/reset/:token" element={<UpdatePasswordPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       )}
     </div>
