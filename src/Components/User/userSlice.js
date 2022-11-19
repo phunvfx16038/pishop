@@ -26,7 +26,7 @@ export const updateUser = createAsyncThunk("user/updateUser", async (data) => {
     const updateData = data.formData;
 
     const res = await axios.post(
-      `${baseUrl}users/update/${data.id}`,
+      `${baseUrl}users/updateBySelf/${data.id}`,
       updateData,
       {
         headers,
