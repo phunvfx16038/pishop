@@ -7,11 +7,11 @@ const PaypalCheckoutButton = (props) => {
   const [error, setError] = useState(null);
   const [orderData, setOrderData] = useState({});
   const math = cartItems.map((item) => {
-    return {
+    const test = {
       name: item.title,
       quantity: item.quantity,
       unit_amount: {
-        value: item.price * item.quantity,
+        value: item.price,
         currency_code: "USD",
         breakdown: {
           item_total: {
@@ -21,7 +21,10 @@ const PaypalCheckoutButton = (props) => {
         },
       },
     };
+    console.log(test);
+    return test;
   });
+  console.log(math);
 
   const handleApprove = (order) => {
     setPaidFor(true);
