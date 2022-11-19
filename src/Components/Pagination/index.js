@@ -22,6 +22,7 @@ const PaginationComponent = ({ products, type }) => {
       : type === "order"
       ? orderPaginationData
       : {};
+
   // Change page
   const paginate = (pageNumber) => {
     if (type === "product") {

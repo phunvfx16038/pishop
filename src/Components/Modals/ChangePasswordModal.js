@@ -152,7 +152,7 @@ const ChangePasswordModal = ({
 
         <Modal.Footer>
           {updatePasswordData.isLoading || updateLoginPassword.isLoading ? (
-            <Spinner />
+            <Spinner animation="border" role="status" />
           ) : (
             <Button variant="primary" onClick={handleUpdatePassword}>
               Submit

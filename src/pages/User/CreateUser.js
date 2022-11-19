@@ -23,6 +23,7 @@ const CreateUser = () => {
     image: "",
     address: "",
     phone: "",
+    password: "",
     isAdmin: false,
   });
 
@@ -30,6 +31,7 @@ const CreateUser = () => {
     userName: "",
     email: "",
     image: "",
+    password: "",
     address: "",
     phone: "",
     isAdmin: "",
@@ -84,17 +86,25 @@ const CreateUser = () => {
 
   const validateError = (formData) => {
     const reg = /^([A-Za-z0-9_\-.])+@([A-Za-z0-9_\-.])+\.([A-Za-z]{2,4})$/;
-    let isError = true;
+    let isError;
+    let error = {
+      userName: "",
+      email: "",
+      password: "",
+      phone: "",
+      address: "",
+      image: "",
+    };
     //validate userName
     if (formData.userName === "") {
       const message = "UserName can't be empty!";
       errors.userName = message;
       setErrors({ ...errors });
-      isError = false;
+      error.userName = false;
     } else {
       errors.userName = "";
       setErrors({ ...errors });
-      isError = true;
+      error.userName = true;
     }
 
     //validate email
@@ -102,55 +112,55 @@ const CreateUser = () => {
       const message = "Email should be included @";
       errors.email = message;
       setErrors({ ...errors });
-      isError = false;
+      error.email = false;
     } else if (formData.email === "") {
       const message = "Email can't be empty!";
       errors.email = message;
       setErrors({ ...errors });
-      isError = false;
+      error.email = false;
     } else {
       errors.email = "";
       setErrors({ ...errors });
-      isError = true;
+      error.email = true;
     }
 
     //validate password
-    if (formData.password.length < 6) {
-      const message = "Name should have at least 6 characters!";
-      errors.password = message;
-      setErrors({ ...errors });
-      isError = false;
-    } else if (formData.password === "") {
+    if (formData.password === "") {
       const message = "Password can't be empty!";
       errors.password = message;
       setErrors({ ...errors });
-      isError = false;
+      error.password = false;
+    } else if (formData.password.length < 6) {
+      const message = "Name should have at least 6 characters!";
+      errors.password = message;
+      setErrors({ ...errors });
+      error.password = false;
     } else {
       errors.password = "";
       setErrors({ ...errors });
-      isError = true;
+      error.password = true;
     }
     //validate image
     if (formData.image === "") {
       const message = "Image can't be empty!";
       errors.image = message;
       setErrors({ ...errors });
-      isError = false;
+      error.image = false;
     } else {
       errors.image = "";
       setErrors({ ...errors });
-      isError = true;
+      error.image = true;
     }
     //validate address
     if (formData.address === "") {
       const message = "Address can't be empty!";
       errors.address = message;
       setErrors({ ...errors });
-      isError = false;
+      error.address = false;
     } else {
       errors.address = "";
       setErrors({ ...errors });
-      isError = true;
+      error.address = true;
     }
 
     //validate phone
@@ -158,15 +168,27 @@ const CreateUser = () => {
       const message = "Phone number can't be empty!";
       errors.phone = message;
       setErrors({ ...errors });
-      isError = false;
+      error.phone = false;
     } else if (isNaN(formData.phone)) {
       const message = "Phone number must be number!";
       errors.phone = message;
       setErrors({ ...errors });
-      isError = false;
+      error.phone = false;
     } else {
       errors.phone = "";
       setErrors({ ...errors });
+      error.phone = true;
+    }
+    if (
+      error.address === false ||
+      error.userName === false ||
+      error.email === false ||
+      error.image === false ||
+      error.phone === false ||
+      error.password === false
+    ) {
+      isError = false;
+    } else {
       isError = true;
     }
     return isError;
@@ -276,15 +298,7 @@ const CreateUser = () => {
           </Col>
         </Row>
         {registerInfor.isLoading ? (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              margin: "20px 0px 10px 0px",
-            }}
-          >
-            <Spinner animation="border" role="status" />
-          </div>
+          <Spinner animation="border" role="status" />
         ) : (
           <Button type="submit" color="success" style={{ marginTop: "20px" }}>
             Create

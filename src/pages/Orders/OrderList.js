@@ -12,11 +12,11 @@ const OrderList = () => {
   const currentUser = useSelector((state) => state.auth.login.user);
   const token = `Bear ${currentUser.accessToken}`;
   const ordersList = useSelector((state) => state.order.getOrders);
-  const paginationData = useSelector((state) => state.user.paginationData);
+  const paginationData = useSelector((state) => state.order.paginationData);
   const navigate = useNavigate();
   useEffect(() => {
     dispatch(getOrders(token));
-  }, [dispatch, token]);
+  }, [dispatch]);
 
   const handleNavigate = (order) => {
     navigate(`/main/order/detail/${order._id}`, {

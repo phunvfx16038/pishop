@@ -34,10 +34,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
         </Routes>
-      ) : isRegisterRoute !== null ? (
-        <Routes>
-          <Route path="/register" element={<Register />} />
-        </Routes>
       ) : currentUser.isAdmin ? (
         <Container fluid style={{ backgroundColor: "#f8f9fc" }}>
           <Row>

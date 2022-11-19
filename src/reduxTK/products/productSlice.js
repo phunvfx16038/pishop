@@ -139,7 +139,10 @@ const productSlice = createSlice({
       state.create.isLoading = "";
     },
     searchProduct: (state, action) => {
-      if (action.payload !== "") {
+      if (action.payload === "") {
+        const copyProductArr = [...state.getProducts.products];
+        state.getProducts.products = copyProductArr;
+      } else {
         const searchArr = state.getProducts.products.filter((product) => {
           return product.title
             .toLowerCase()
