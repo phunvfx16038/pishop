@@ -7,6 +7,7 @@ const authValidator = require("../validate/authValidator");
 router.get("/", isAuth, userRouter.getUsers);
 router.get("/:id", isAuth, userRouter.getUser);
 router.post("/update/:id", isAuth, userRouter.postUpdateUser);
+router.post("/updateBySelf/:id", isAuth, userRouter.updateUserByThemselve);
 router.post("/delete/:id", isAuth, userRouter.deleteUser);
 router.post("/deleteMany", isAuth, userRouter.deleteUsers);
 

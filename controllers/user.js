@@ -25,6 +25,7 @@ exports.getUser = (req, res, next) => {
   }
 };
 
+//admin update user
 exports.postUpdateUser = (req, res, next) => {
   const id = req.params.id;
   const userName = req.body.userName;
@@ -39,19 +40,7 @@ exports.postUpdateUser = (req, res, next) => {
   if (hasError) {
     return res.status(400).json({ message: result.array()[0].msg });
   }
-  if (req.user.isAdmin === false) {
-    User.findByIdAndUpdate(
-      id,
-      {
-        $set: req.body,
-      },
-      { new: true }
-    )
-      .then((user) => {
-        return res.status(201).json(user);
-      })
-      .catch((err) => res.status(404).json(err));
-  } else if (req.user.isAdmin) {
+  if (req.user.isAdmin) {
     User.findById(id).then((user) => {
       if (user.isAdmin) {
         user.userName = userName;
@@ -84,6 +73,22 @@ exports.postUpdateUser = (req, res, next) => {
   } else {
     return res.status(403).json("Bạn không có quyền cập nhật!");
   }
+};
+
+//user update by themselve
+exports.updateUserByThemselve = (req, res) => {
+  const id = req.params.id;
+  User.findByIdAndUpdate(
+    id,
+    {
+      $set: req.body,
+    },
+    { new: true }
+  )
+    .then((user) => {
+      return res.status(201).json(user);
+    })
+    .catch((err) => res.status(404).json(err));
 };
 
 exports.deleteUser = (req, res, next) => {
