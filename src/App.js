@@ -84,7 +84,6 @@ function App() {
         </Container>
       ) : (
         <Routes>
-          <Route path="/" element={<Login />} />
           <Route exact path="/reset" element={<ResetPasswordPage />} />
           <Route path="/reset/:token" element={<UpdatePasswordPage />} />
           <Route path="*" element={<NotFound />} />
