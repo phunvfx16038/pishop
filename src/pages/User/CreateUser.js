@@ -283,7 +283,7 @@ const CreateUser = () => {
               margin: "20px 0px 10px 0px",
             }}
           >
-            <Spinner animation="border" style={{ alignItems: "center" }} />
+            <Spinner animation="border" role="status" />
           </div>
         ) : (
           <Button type="submit" color="success" style={{ marginTop: "20px" }}>

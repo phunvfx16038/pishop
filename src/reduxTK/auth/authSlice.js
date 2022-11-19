@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const baseUrl = "https://pishop.onrender.com";
-// "http://localhost:8080";
+import { baseUrl } from "../../Data/Url";
+
 export const postRegisterUser = createAsyncThunk(
   "auth/postRegisterUser",
   async (user, { rejectWithValue }) => {

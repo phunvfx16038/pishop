@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-const baseUrl = "https://pishop.onrender.com";
-// "http://localhost:8080";
+import { baseUrl } from "../../Data/Url";
+
 export const getProducts = createAsyncThunk("user/getProducts", async () => {
   try {
     const res = await axios.get(`${baseUrl}/products`);
@@ -134,9 +134,9 @@ const productSlice = createSlice({
       state.update.product = action.payload;
       state.update.isError = "";
       state.update.isLoading = "";
-      state.update.create = action.payload;
-      state.update.isError = "";
-      state.update.isLoading = "";
+      state.create.product = action.payload;
+      state.create.isError = "";
+      state.create.isLoading = "";
     },
     searchProduct: (state, action) => {
       if (action.payload !== "") {
@@ -223,7 +223,7 @@ const productSlice = createSlice({
         state.create.isLoading = true;
       })
       .addCase(createProduct.fulfilled, (state, action) => {
-        state.create.isLoading = true;
+        state.create.isLoading = false;
         state.create.product = action.payload;
         state.create.isError = "";
       })

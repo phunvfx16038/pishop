@@ -19,7 +19,6 @@ const ProfileCard = ({ userDetail }) => {
   const [duration, setDuration] = useState(null);
   const [callModal, setCallModal] = useState(false);
   const token = `Bear ${userDetail.accessToken}`;
-  const registerInfor = useSelector((state) => state.auth.register);
   const userUpdated = useSelector((state) => state.user.update);
   const [callModalChangePassword, setCallModalChangePassword] = useState(false);
   const dispatch = useDispatch();
@@ -247,7 +246,7 @@ const ProfileCard = ({ userDetail }) => {
       </div>
       <div style={{ padding: "15px" }}>
         {/* <h1 style={{ textAlign: "center" }}>User Detail</h1> */}
-        {registerInfor.isError ? (
+        {userUpdated.isError ? (
           <p
             style={{
               color: "red",
@@ -257,7 +256,7 @@ const ProfileCard = ({ userDetail }) => {
               margin: "10px auto",
             }}
           >
-            {registerInfor.isError}
+            {userUpdated.isError}
           </p>
         ) : (
           ""
@@ -325,6 +324,7 @@ const ProfileCard = ({ userDetail }) => {
                     type="select"
                     value={formData.isAdmin}
                     onChange={handleChange}
+                    disabled={userDetail.isAdmin ? true : false}
                   >
                     <option value="false">False</option>
                     <option value="true">True </option>
@@ -339,7 +339,7 @@ const ProfileCard = ({ userDetail }) => {
               </Button>
             </Col>
           </Row>
-          {registerInfor.isLoading ? (
+          {userUpdated.isLoading ? (
             <div
               style={{
                 display: "flex",
@@ -347,7 +347,7 @@ const ProfileCard = ({ userDetail }) => {
                 margin: "20px 0px 10px 0px",
               }}
             >
-              <Spinner animation="border" style={{ alignItems: "center" }} />
+              <Spinner animation="border" />
             </div>
           ) : (
             <Button type="submit" color="success" style={{ marginTop: "20px" }}>

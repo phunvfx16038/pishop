@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -17,7 +17,6 @@ const UpdataInfor = () => {
   const dispatch = useDispatch();
   const currentUser = useSelector((state) => state.auth.login.user);
   const token = `Bear ${currentUser.accessToken}`;
-  const registerInfor = useSelector((state) => state.auth.register);
   const [callModal, setCallModal] = useState(false);
   const [callModalChangePassword, setCallModalChangePassword] = useState(false);
   const userUpdated = useSelector((state) => state.user.update);
@@ -192,7 +191,7 @@ const UpdataInfor = () => {
   return (
     <div style={{ padding: "15px" }}>
       <h1 style={{ textAlign: "center" }}>User Detail</h1>
-      {/* {registerInfor.isError ? (
+      {userUpdated.isError ? (
         <p
           style={{
             color: "red",
@@ -202,11 +201,11 @@ const UpdataInfor = () => {
             margin: "10px auto",
           }}
         >
-          {registerInfor.isError}
+          {userUpdated.isError}
         </p>
       ) : (
         ""
-      )} */}
+      )}
       <Form onSubmit={handleSubmit}>
         <Row>
           <Col sm="6">
@@ -304,16 +303,8 @@ const UpdataInfor = () => {
             </Form.Group>
           </Col>
         </Row>
-        {registerInfor.isLoading ? (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              margin: "20px 0px 10px 0px",
-            }}
-          >
-            <Spinner animation="border" style={{ alignItems: "center" }} />
-          </div>
+        {userUpdated.isLoading ? (
+          <Spinner animation="border" role="status" />
         ) : (
           <Button type="submit" color="success" style={{ marginTop: "20px" }}>
             Update

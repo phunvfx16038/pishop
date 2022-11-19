@@ -364,10 +364,13 @@ const ProductDetail = () => {
             </Form.Group>
           </Col>
         </Row>
-
-        <Button type="submit" color="success" style={{ marginTop: "20px" }}>
-          Update
-        </Button>
+        {updatedProduct.isLoading ? (
+          <Spinner animation="border" role="status" />
+        ) : (
+          <Button type="submit" color="success" style={{ marginTop: "20px" }}>
+            Update
+          </Button>
+        )}
       </Form>
       <ConfirmModal
         callModal={callModal}

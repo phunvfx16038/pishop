@@ -2,9 +2,6 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import "../../Components/Sidebar/sidebar.css";
 import CardItem from "../../Components/Card/CardItem";
-import LineGraph from "../../Components/Chart/LineGraph";
-import { UserData as data } from "../../data/data";
-import PieChart from "../../Components/Chart/PieChart";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getUsers } from "../../reduxTK/user/userSlice";
@@ -12,7 +9,6 @@ import { getProducts } from "../../reduxTK/products/productSlice";
 import { getOrders } from "../../reduxTK/orders/OrderSlice";
 
 const DashBoard = () => {
-  const labels = data.map((item) => item.year);
   const dispatch = useDispatch();
   const userQuantity = useSelector((state) => state.user.listUser.users.length);
   const ordersQuantity = useSelector(
@@ -27,22 +23,6 @@ const DashBoard = () => {
     { name: "User", quantity: userQuantity, url: "users" },
     { name: "Product", quantity: productQuantity, url: "products" },
     { name: "Orders", quantity: ordersQuantity, url: "orders" },
-  ];
-
-  const datasets = [
-    {
-      label: "Users Gained",
-      data: data.map((data) => data.userGain),
-      backgroundColor: [
-        "rgba(75,192,192,1)",
-        "#ecf0f1",
-        "#50AF95",
-        "#f3ba2f",
-        "#2a71d0",
-      ],
-      borderColor: "black",
-      borderWidth: 2,
-    },
   ];
 
   useEffect(() => {

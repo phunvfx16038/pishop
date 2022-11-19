@@ -32,7 +32,7 @@ const CreateProduct = () => {
     tutorial: "",
     imageUrl: "",
     size: "",
-    categories: "",
+    categories: "men",
     thumbnail: "",
   });
 
@@ -299,7 +299,6 @@ const CreateProduct = () => {
               <Form.Select
                 style={{ width: "100%", marginBottom: "20px" }}
                 name="categories"
-                value={formData.categories}
                 onChange={handleChange}
               >
                 {categoriesList.map((item, index) => (
@@ -342,14 +341,19 @@ const CreateProduct = () => {
           </Col>
         </Row>
 
-        <Button type="submit" color="success" style={{ marginTop: "20px" }}>
-          Create
-        </Button>
+        {createNewProductInfor.isLoading ? (
+          <Spinner animation="border" role="status" />
+        ) : (
+          <Button type="submit" color="success" style={{ marginTop: "20px" }}>
+            Create
+          </Button>
+        )}
       </Form>
       <ConfirmModal
         callModal={callModal}
         close={() => setCallModal(false)}
         nameFile="Product"
+        type="create"
       />
     </div>
   );
