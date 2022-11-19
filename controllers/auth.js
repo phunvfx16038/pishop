@@ -40,7 +40,7 @@ const sendMail = async (emailUser, token) => {
       subject: "Password Reset",
       html: `
       <p>You requested a reset password</p>
-      <p>Click this <a href='https://pishopadmin.netlify.app/reset/${token}'>link</a> to set new password</p>
+      <p>Click this <a href='https://pishop.netlify.app/reset/${token}'>link</a> to set new password</p>
     `,
     });
     console.log("success!");
