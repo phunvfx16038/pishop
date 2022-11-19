@@ -39,8 +39,19 @@ exports.postUpdateUser = (req, res, next) => {
   if (hasError) {
     return res.status(400).json({ message: result.array()[0].msg });
   }
-
-  if (req.user.isAdmin || id === req.user._id) {
+  if (req.user.isAdmin === false) {
+    User.findByIdAndUpdate(
+      id,
+      {
+        $set: req.body,
+      },
+      { new: true }
+    )
+      .then((user) => {
+        return res.status(201).json(user);
+      })
+      .catch((err) => res.status(404).json(err));
+  } else if (req.user.isAdmin) {
     User.findById(id).then((user) => {
       if (user.isAdmin) {
         user.userName = userName;
@@ -70,20 +81,6 @@ exports.postUpdateUser = (req, res, next) => {
           .catch((err) => res.status(404).json(err));
       }
     });
-    if (req.body.isAdmin) {
-    } else {
-      User.findByIdAndUpdate(
-        id,
-        {
-          $set: req.body,
-        },
-        { new: true }
-      )
-        .then((user) => {
-          return res.status(201).json(user);
-        })
-        .catch((err) => res.status(404).json(err));
-    }
   } else {
     return res.status(403).json("Bạn không có quyền cập nhật!");
   }
