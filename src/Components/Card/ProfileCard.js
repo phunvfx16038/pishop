@@ -18,7 +18,6 @@ const ProfileCard = ({ userDetail }) => {
   const [duration, setDuration] = useState(null);
   const [callModal, setCallModal] = useState(false);
   const token = `Bear ${userDetail.accessToken}`;
-  const registerInfor = useSelector((state) => state.user.register);
   const userUpdated = useSelector((state) => state.user.update);
   const [screen, setScreen] = useState(window.innerWidth);
   const [callModalChangePassword, setCallModalChangePassword] = useState(false);
@@ -44,7 +43,10 @@ const ProfileCard = ({ userDetail }) => {
 
   useEffect(() => {
     setScreen(window.innerWidth);
-  }, []);
+    if (JSON.stringify(userUpdated.user) !== "{}") {
+      setCallModal(true);
+    }
+  }, [userUpdated.user]);
 
   const handleUpload = (e) => {
     setImageFile(e.target.files[0]);
@@ -67,14 +69,12 @@ const ProfileCard = ({ userDetail }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     validateError(formData);
+    const accessToken = userDetail.accessToken;
     if (validateError(formData)) {
       const { _id } = userDetail;
-      const newUpdateUser = { _id, ...formData };
+      const newUpdateUser = { _id, ...formData, accessToken };
       dispatch(updateUser({ token, id: _id, formData }));
       dispatch(updateMainAccount(newUpdateUser));
-      if (userUpdated.user) {
-        setCallModal(true);
-      }
     }
   };
 
@@ -241,7 +241,7 @@ const ProfileCard = ({ userDetail }) => {
       </div>
       <div style={{ padding: "15px" }}>
         {/* <h1 style={{ textAlign: "center" }}>User Detail</h1> */}
-        {registerInfor.isError ? (
+        {userUpdated.isError ? (
           <p
             style={{
               color: "red",
@@ -251,7 +251,7 @@ const ProfileCard = ({ userDetail }) => {
               margin: "10px auto",
             }}
           >
-            {registerInfor.isError}
+            {userUpdated.isError}
           </p>
         ) : (
           ""
@@ -337,15 +337,9 @@ const ProfileCard = ({ userDetail }) => {
               </Form.Group>
             </Col>
           </Row>
-          {registerInfor.isLoading ? (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                margin: "20px 0px 10px 0px",
-              }}
-            >
-              <Spinner animation="border" style={{ alignItems: "center" }} />
+          {userUpdated.isLoading ? (
+            <div style={{ marginTop: "20px" }}>
+              <Spinner animation="border" />
             </div>
           ) : (
             <Button type="submit" color="success" style={{ marginTop: "20px" }}>

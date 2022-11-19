@@ -130,6 +130,11 @@ const userSlice = createSlice({
       error: "",
       isLoading: "",
     },
+    updatePw: {
+      user: {},
+      error: "",
+      isLoading: "",
+    },
   },
   reducers: {
     logoutUser: (state, action) => {
@@ -148,6 +153,10 @@ const userSlice = createSlice({
     },
     clearUpdated: (state, action) => {
       state.update.user = action.payload;
+      state.updatePw.user = action.payload;
+      state.resetPw.user = action.payload;
+      state.resetPw.error = "";
+      state.resetPw.isLoading = false;
     },
   },
   extraReducers: (builder) => {
@@ -197,16 +206,16 @@ const userSlice = createSlice({
         state.resetPw.user = action.payload;
       })
       .addCase(updatePassword.pending, (state, action) => {
-        state.update.isLoading = true;
+        state.updatePw.isLoading = true;
       })
       .addCase(updatePassword.fulfilled, (state, action) => {
-        state.update.isError = "";
-        state.update.isLoading = false;
-        state.update.user = action.payload;
+        state.updatePw.error = "";
+        state.updatePw.isLoading = false;
+        state.updatePw.user = action.payload;
       })
       .addCase(updatePassword.rejected, (state, action) => {
-        state.update.isError = action.payload;
-        state.update.isLoading = false;
+        state.updatePw.error = action.payload;
+        state.updatePw.isLoading = false;
       });
   },
 });

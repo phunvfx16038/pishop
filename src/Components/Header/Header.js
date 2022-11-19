@@ -20,7 +20,7 @@ import { NavLink as NLink, useNavigate } from "react-router-dom";
 import "./header.css";
 import { IoMdCart, IoIosSearch, IoMdHome } from "react-icons/io";
 import { IoPersonCircle } from "react-icons/io5";
-import { logoutUser } from "../User/userSlice";
+import { clearUpdated, logoutUser } from "../User/userSlice";
 import { getCart, resetCart, updateCart } from "../CartItem/cartSlice";
 import { searchProduct } from "../ProductLists/productSlice";
 
@@ -57,6 +57,12 @@ const Header = () => {
     if (e.keyCode === 13) {
       handleSearch();
     }
+  };
+
+  const handleProfile = () => {
+    const reset = {};
+    dispatch(clearUpdated(reset));
+    navigate("/profile");
   };
 
   const handleUpdateCart = () => {
@@ -139,7 +145,11 @@ const Header = () => {
                   </DropdownToggle>
                   <DropdownMenu end>
                     <DropdownItem>
-                      <NLink to="/profile" style={{ color: "black" }}>
+                      <NLink
+                        to="/profile"
+                        style={{ color: "black" }}
+                        onClick={handleProfile}
+                      >
                         Hồ sơ
                       </NLink>
                     </DropdownItem>

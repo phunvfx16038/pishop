@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { resetPassword } from "../../Components/User/userSlice";
+import { clearUpdated, resetPassword } from "../../Components/User/userSlice";
 const ResetPasswordPage = () => {
   const [email, setEmail] = useState(null);
   const dispatch = useDispatch();
@@ -34,8 +34,10 @@ const ResetPasswordPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const reset = {};
     if (validateError(email)) {
       dispatch(resetPassword({ email }));
+      dispatch(clearUpdated(reset));
       setShow(true);
     }
   };

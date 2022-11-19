@@ -17,12 +17,12 @@ const UpdatePasswordPage = () => {
   const [errors, setErrors] = useState({
     password: "",
   });
-  console.log(resetData);
   useEffect(() => {
     if (JSON.stringify(resetData.user) !== "{}") {
       setCallModal(true);
     }
   }, [resetData.user]);
+
   const validateError = (password) => {
     let isError = true;
     if (password.length < 6) {

@@ -7,13 +7,14 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUpdated, updatePassword } from "../User/userSlice";
 import ConfirmModal from "./ConfirmModal";
+import Spinner from "react-bootstrap/esm/Spinner";
 const ChangePasswordModal = ({ callModal, close, userId, token }) => {
   const dispatch = useDispatch();
   const [toggle, setToggle] = useState(false);
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
   const [callModalConfirm, setCallModalConfirm] = useState(false);
-  const updatePasswordData = useSelector((state) => state.user.update);
+  const updatePasswordData = useSelector((state) => state.user.updatePw);
   const [errors, setErrors] = useState({
     password: "",
     confirmPassword: "",
@@ -120,9 +121,15 @@ const ChangePasswordModal = ({ callModal, close, userId, token }) => {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="primary" onClick={handleUpdatePassword}>
-            Submit
-          </Button>
+          {updatePasswordData.isLoading ? (
+            <div style={{ marginTop: "20px" }}>
+              <Spinner animation="border" />
+            </div>
+          ) : (
+            <Button variant="primary" onClick={handleUpdatePassword}>
+              Submit
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
 

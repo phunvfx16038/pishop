@@ -42,7 +42,7 @@ const Orders = () => {
               <tbody>
                 {order.map((item, index) => (
                   <tr key={index}>
-                    <td>{index}</td>
+                    <td>{index + 1}</td>
                     <td>{item.purchase_units[0].amount.value}</td>
                     <td>Đã thanh toán</td>
                     <td>{item.created_at}</td>
