@@ -24,9 +24,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "build")));
 
-app.get("/*", function (req, res) {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
 app.use(
   cors({
     origin: [
@@ -58,7 +55,9 @@ app.use("/users", userRouter);
 app.use("/products", productRouter);
 app.use("/orders", orderRouter);
 app.use("/cart", cartRouter);
-
+app.get("/*", function (req, res) {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 const PORT = process.env.PORT || 8080;
 
 mongoose
