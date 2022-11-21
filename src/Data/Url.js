@@ -1,4 +1,4 @@
-export const baseUrl = "http://localhost:8080/";
+export const baseUrl = "https://pishop.onrender.com/";
 // "https://pishop.onrender.com/";
 // "http://localhost:8080/";
 //
