@@ -14,7 +14,7 @@ const productRouter = require("./router/product");
 const orderRouter = require("./router/order");
 const cartRouter = require("./router/cart");
 const dotenv = require("dotenv");
-
+const path = require("path");
 const app = express();
 dotenv.config();
 const MONGO_URI =
